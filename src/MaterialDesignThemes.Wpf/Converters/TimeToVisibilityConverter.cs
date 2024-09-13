@@ -21,7 +21,5 @@ public class TimeToVisibilityConverter : MarkupExtension, IValueConverter
     }
 
     public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-    {
-        return Binding.DoNothing;
-    }
+        => Binding.DoNothing;
 }

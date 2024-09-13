@@ -24,9 +24,9 @@ public class PointValueConverter : IMultiValueConverter
         if (value is Point)
         {
             var point = (Point)value;
-            return new object[] { point.X, point.Y };
+            return [point.X, point.Y];
         }
 
-        return new object[0];
+        return Array.Empty<object>();
     }
 }

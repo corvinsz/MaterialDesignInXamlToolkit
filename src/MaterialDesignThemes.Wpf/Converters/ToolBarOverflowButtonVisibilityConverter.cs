@@ -14,15 +14,14 @@ public class ToolBarOverflowButtonVisibilityConverter : IMultiValueConverter
         {
             return Visibility.Visible;
         }
-        else
+
+        return overflowMode switch
         {
-            return overflowMode switch
-            {
-                OverflowMode.Always => Visibility.Visible,
-                OverflowMode.Never => Visibility.Hidden,
-                _ => Visibility.Hidden,
-            };
-        }
+            OverflowMode.Always => Visibility.Visible,
+            OverflowMode.Never => Visibility.Hidden,
+            _ => Visibility.Hidden,
+        };
     }
-    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture) => throw new NotImplementedException();
+    public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        => throw new NotImplementedException();
 }
