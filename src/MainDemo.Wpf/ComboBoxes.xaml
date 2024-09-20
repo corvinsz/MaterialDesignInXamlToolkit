@@ -33,6 +33,20 @@
         </Style>
       </StackPanel.Resources>
 
+      <smtx:XamlDisplay Margin="50" UniqueKey="comboboxes_1337">
+        <ComboBox materialDesign:HintAssist.Hint="This is a long hint text"
+                  Style="{StaticResource MaterialDesignFloatingHintComboBox}">
+          <ComboBox.Items>
+            <ComboBoxItem>
+              <TextBlock Text="Single row"/>
+            </ComboBoxItem>
+            <ComboBoxItem>
+              <TextBlock Text="These&#x0a;are&#x0a;multiple&#x0a;rows"/>
+            </ComboBoxItem>
+          </ComboBox.Items>
+        </ComboBox>
+      </smtx:XamlDisplay>
+
       <smtx:XamlDisplay Margin="0,0,8,0" UniqueKey="comboboxes_1">
         <ComboBox materialDesign:HintAssist.Hint="OS">
           <ComboBoxItem Content="Android" />
