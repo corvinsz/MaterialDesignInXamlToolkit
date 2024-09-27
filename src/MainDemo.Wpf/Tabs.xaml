@@ -23,7 +23,13 @@
                       HorizontalAlignment="Left"
                       UniqueKey="tabs_1_default">
       <TabControl Width="300">
-        <TabItem Header="TAB 1">
+        <TabItem>
+          <TabItem.Header>
+            <StackPanel Orientation="Horizontal">
+              <materialDesign:PackIcon Kind="Bin"/>
+              <TextBlock Text="TAB 11111"/>
+            </StackPanel>
+          </TabItem.Header>
           <TextBlock Margin="8"
                      Text="Default Tab 1" />
         </TabItem>
