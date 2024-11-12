@@ -341,7 +341,8 @@
             pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Flipper.xaml
       -->
       <StackPanel>
-        <smtx:XamlDisplay Margin="0,0,8,8" UniqueKey="cards_7">
+        <!--first this flipper below-->
+        <!--<smtx:XamlDisplay Margin="0,0,8,8" UniqueKey="cards_7">
           <materialDesign:Flipper IsFlippedChanged="Flipper_OnIsFlippedChanged">
             <materialDesign:Flipper.FrontContent>
               <Button Width="184"
@@ -358,8 +359,8 @@
                       Style="{StaticResource MaterialDesignFlatButton}" />
             </materialDesign:Flipper.BackContent>
           </materialDesign:Flipper>
-        </smtx:XamlDisplay>
-        <smtx:XamlDisplay Margin="0,0,8,8" UniqueKey="cards_8">
+        </smtx:XamlDisplay>-->
+        <!--<smtx:XamlDisplay Margin="0,0,8,8" UniqueKey="cards_8">
           <materialDesign:Flipper materialDesign:ElevationAssist.Elevation="Dp0">
             <materialDesign:Flipper.FrontContent>
               <Grid Width="200" Height="256">
@@ -441,10 +442,10 @@
               </Grid>
             </materialDesign:Flipper.BackContent>
           </materialDesign:Flipper>
-        </smtx:XamlDisplay>
+        </smtx:XamlDisplay>-->
       </StackPanel>
 
-      <smtx:XamlDisplay Margin="0,0,8,8" UniqueKey="cards_9">
+      <!--<smtx:XamlDisplay Margin="0,0,8,8" UniqueKey="cards_9">
         <materialDesign:Flipper VerticalAlignment="Top">
           <materialDesign:Flipper.FrontContent>
             <Button Width="192"
@@ -510,10 +511,11 @@
             </Grid>
           </materialDesign:Flipper.BackContent>
         </materialDesign:Flipper>
-      </smtx:XamlDisplay>
+      </smtx:XamlDisplay>-->
 
       <StackPanel>
-        <smtx:XamlDisplay Margin="4,4,0,0"
+        <!--second this flipper below-->
+        <!--<smtx:XamlDisplay Margin="4,4,0,0"
                         VerticalContentAlignment="Top"
                         UniqueKey="cards_10">
           <materialDesign:FlipperClassic IsFlippedChanged="Flipper_OnIsFlippedChanged">
@@ -534,9 +536,9 @@
                     Style="{StaticResource MaterialDesignFlatButton}" />
             </materialDesign:FlipperClassic.BackContent>
           </materialDesign:FlipperClassic>
-        </smtx:XamlDisplay>
+        </smtx:XamlDisplay>-->
 
-        <smtx:XamlDisplay Margin="4,4,0,0"
+        <!--<smtx:XamlDisplay Margin="4,4,0,0"
                         VerticalContentAlignment="Top"
                         UniqueKey="cards_11">
           <materialDesign:FlipperClassic materialDesign:FlipperAssist.UniformCornerRadius="8"
@@ -557,9 +559,9 @@
                     Style="{StaticResource MaterialDesignFlatButton}" />
             </materialDesign:FlipperClassic.BackContent>
           </materialDesign:FlipperClassic>
-        </smtx:XamlDisplay>
+        </smtx:XamlDisplay>-->
 
-        <smtx:XamlDisplay Margin="4,4,0,0"
+        <!--<smtx:XamlDisplay Margin="4,4,0,0"
                         VerticalContentAlignment="Top"
                         UniqueKey="cards_12">
           <materialDesign:FlipperClassic materialDesign:FlipperAssist.CardStyle="{StaticResource MaterialDesignOutlinedCard}"
@@ -581,7 +583,7 @@
                     Style="{StaticResource MaterialDesignFlatButton}" />
             </materialDesign:FlipperClassic.BackContent>
           </materialDesign:FlipperClassic>
-        </smtx:XamlDisplay>
+        </smtx:XamlDisplay>-->
       </StackPanel>
     </WrapPanel>
   </StackPanel>
