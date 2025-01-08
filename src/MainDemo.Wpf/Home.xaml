@@ -54,6 +54,15 @@
             <TextBlock Margin="8,0,0,0" Text="EXPLORE" />
           </StackPanel>
         </Button>
+
+        <TextBox MinWidth="200" Text="aaaaaaaaaaaaaaaaaaaaaaaa" x:Name="tbPrefix"/>
+        <ComboBox materialDesign:HintAssist.Hint="Hint" IsEditable="True"
+                  materialDesign:TextFieldAssist.PrefixText="{Binding ElementName=tbPrefix, Path=Text}"
+                  Style="{StaticResource MaterialDesignFilledComboBox}"
+                  SelectedIndex="0">
+          <ComboBoxItem Content="Item1"/>
+        </ComboBox>
+
       </StackPanel>
     </Grid>
 

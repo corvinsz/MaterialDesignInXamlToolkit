@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Globalization;
 using System.Windows.Data;
 
@@ -30,15 +31,34 @@ public class FloatingHintMarginConverter : IMultiValueConverter
         double prefixTotalWidth = prefixWidth > 0 ? prefixWidth + prefixMargin.Right : 0;
         double suffixTotalWidth = suffixWidth > 0 ? suffixWidth + suffixMargin.Left : 0;
 
-        return new Thickness(GetLeftMargin(), 0, GetRightMargin(), 0);
+        var result = new Thickness(GetLeftMargin(), 0, GetRightMargin(), 0);
+        Debug.WriteLine($"FloatingHintMarginConverter: {result}");
+        return result;
 
         double GetLeftMargin()
         {
-            return prefixVisibility switch
+            if (prefixVisibility == PrefixSuffixVisibility.Always)
             {
-                PrefixSuffixVisibility.Always => prefixWidth + prefixMargin.Right,
-                _ => (isFloatingHint && isEditable) || (!isKeyboardFocusWithin && isEditable) ? 0 : prefixTotalWidth,
-            };
+                return prefixWidth + prefixMargin.Right;
+            }
+            else
+            {
+                bool a = (isFloatingHint && isEditable);
+                bool b = (!isKeyboardFocusWithin && isEditable);
+
+                if (prefixTotalWidth > 100d)
+                {
+                    int idk = 2;
+                }
+
+                return a || b ? 0 : prefixTotalWidth;
+            }
+
+            //return prefixVisibility switch
+            //{
+            //    PrefixSuffixVisibility.Always => prefixWidth + prefixMargin.Right,
+            //    _ => (isFloatingHint && isEditable) || (!isKeyboardFocusWithin && isEditable) ? 0 : prefixTotalWidth,
+            //};
         }
 
         double GetRightMargin()
