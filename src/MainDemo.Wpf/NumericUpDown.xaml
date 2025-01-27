@@ -57,5 +57,29 @@
       
     </StackPanel>
 
+    <smtx:XamlDisplay Margin="10,5"
+                  VerticalAlignment="Top"
+                  UniqueKey="numericUpDown_default111111">
+      <StackPanel>
+        <!--<DockPanel.Resources>
+          <Style TargetType="materialDesign:NumericUpDown" BasedOn="{StaticResource {x:Type materialDesign:NumericUpDown}}">
+            <Setter Property="Value" Value="12"/>
+          </Style>
+        </DockPanel.Resources>-->
+        <materialDesign:DecimalUpDown Value="{Binding MyDouble}" StringFormat="{}{0:c}" />
+        <TextBlock Text="{Binding MyDouble}"/>
+      </StackPanel>
+    </smtx:XamlDisplay>
+
+    <!--<smtx:XamlDisplay Margin="10,5"
+              VerticalAlignment="Top"
+              UniqueKey="numericUpDown_default1111111">
+      <StackPanel>
+        <TextBox Text="{Binding MyCurrency, StringFormat='{}{0:c}'}" />
+        <TextBlock Text="{Binding MyCurrency}"/>
+      </StackPanel>
+    </smtx:XamlDisplay>-->
+
+
   </DockPanel>
 </UserControl>

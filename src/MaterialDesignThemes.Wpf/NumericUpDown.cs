@@ -29,6 +29,9 @@ public class IntArithmetic : IArithmetic<int>
     public int MinValue() => int.MinValue;
 
     public int MaxValue() => int.MaxValue;
+
+    public int Zero() => 0;
+
     public int One() => 1;
 
     public int Max(int value1, int value2) => Math.Max(value1, value2);

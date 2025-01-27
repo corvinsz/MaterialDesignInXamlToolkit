@@ -6,7 +6,9 @@ namespace MaterialDesignThemes.Wpf;
 
 #if NET8_0_OR_GREATER
 using System.Numerics;
-public class UpDownBase<T> : UpDownBase
+using System.Text.RegularExpressions;
+
+public abstract class UpDownBase<T> : UpDownBase
     where T : INumber<T>, IMinMaxValue<T>
 {
     private static readonly Type SelfType = typeof(UpDownBase<T>);
@@ -15,6 +17,7 @@ public class UpDownBase<T> : UpDownBase
 
     private static T MinValue => T.MinValue;
     private static T MaxValue => T.MaxValue;
+    private static T Zero => T.Zero;
     private static T One => T.One;
     private static T Max(T value1, T value2) => T.Max(value1, value2);
     private static T Clamp(T value, T min, T max) => T.Clamp(value, min, max);
@@ -34,6 +37,7 @@ public class UpDownBase<T, TArithmetic> : UpDownBase
 
     private static T MinValue => _arithmetic.MinValue();
     private static T MaxValue => _arithmetic.MaxValue();
+    private static T Zero => _arithmetic.Zero();
     private static T One => _arithmetic.One();
     private static T Max(T value1, T value2) => _arithmetic.Max(value1, value2);
     private static T Clamp(T value, T min, T max) => _arithmetic.Max(_arithmetic.Min(value, max), min);
@@ -102,7 +106,10 @@ public class UpDownBase<T, TArithmetic> : UpDownBase
     }
 
     public static readonly DependencyProperty ValueProperty =
-            DependencyProperty.Register(nameof(Value), typeof(T), SelfType, new FrameworkPropertyMetadata(default(T), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnNumericValueChanged, CoerceNumericValue));
+            DependencyProperty.Register(nameof(Value),
+                                        typeof(T),
+                                        SelfType,
+                                        new FrameworkPropertyMetadata(default(T), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, OnNumericValueChanged, CoerceNumericValue));
 
     private static void OnNumericValueChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -115,7 +122,8 @@ public class UpDownBase<T, TArithmetic> : UpDownBase
 
         if (upDownBase._textBoxField is { } textBox)
         {
-            textBox.Text = e.NewValue.ToString();
+            upDownBase.UpdateText();
+            //textBox.Text = e.NewValue.ToString();
         }
 
         if (upDownBase._increaseButton is { } increaseButton)
@@ -168,6 +176,189 @@ public class UpDownBase<T, TArithmetic> : UpDownBase
 
     #endregion
 
+
+    public string StringFormat
+    {
+        get => (string)GetValue(StringFormatProperty);
+        set => SetValue(StringFormatProperty, value);
+    }
+
+    public static readonly DependencyProperty StringFormatProperty
+        = DependencyProperty.Register(nameof(StringFormat),
+                                      typeof(string),
+                                      SelfType,
+                                      new FrameworkPropertyMetadata(string.Empty, OnStringFormatPropertyChanged, CoerceStringFormat));
+
+    private static void OnStringFormatPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        var upDownBase = ToUpDownBase(d);
+        if (e.OldValue != e.NewValue && upDownBase is not null)
+        {
+            if (upDownBase._textBoxField is not null)
+            {
+                upDownBase.UpdateText();
+                //upDownBase._textBoxField.Text = FormattedValueString(newValue, this.StringFormat, CultureInfo.CurrentUICulture);
+            }
+
+            //if (e.NewValue is string format && !string.IsNullOrEmpty(format) && RegexStringFormatHexadecimal.IsMatch(format))
+            //{
+            //    numericUpDown.SetCurrentValue(ParsingNumberStyleProperty, NumberStyles.HexNumber);
+            //    numericUpDown.SetCurrentValue(NumericInputModeProperty, numericUpDown.NumericInputMode | NumericInput.Decimal);
+            //}
+        }
+    }
+
+    private static object CoerceStringFormat(DependencyObject d, object? baseValue)
+    {
+        return baseValue ?? string.Empty;
+    }
+
+    private void UpdateText()
+    {
+        if (_textBoxField is not null)
+        {
+            _textBoxField.Text = GetFormattedValueString(Value, StringFormat);
+        }
+    }
+
+    private static readonly System.Text.RegularExpressions.Regex _regexStringFormat =
+        new(@"\{0\s*(:(?<format>.*))?\}", System.Text.RegularExpressions.RegexOptions.Compiled);
+    private string? GetFormattedValueString(T newValue, string format, CultureInfo culture = null)
+    {
+        culture ??= CultureInfo.CurrentCulture;
+        format = format.Replace("{}", string.Empty);
+        if (!string.IsNullOrWhiteSpace(format))
+        {
+            var match = _regexStringFormat.Match(format);
+            if (match.Success)
+            {
+                // we have a format template such as "{0:N0}"
+                return string.Format(culture, format, newValue);
+            }
+
+            // we have a format such as "N0"
+            //return newValue.ToString(format, culture);
+        }
+
+        return newValue.ToString();
+        //return newValue.ToString(culture);
+    }
+
+    private void OnTextChanged(object sender, TextChangedEventArgs e)
+    {
+        var text = ((TextBox)sender).Text;
+        this.ChangeValueFromTextInput(text);
+    }
+
+    private void ChangeValueFromTextInput(string text)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            this.SetCurrentValue(ValueProperty, null);
+            return;
+        }
+
+        if (this.ValidateText(text, out var convertedValue))
+        {
+            convertedValue = GetFormattedValueString(convertedValue, this.StringFormat, CultureInfo.CurrentUICulture);
+            this.SetValueTo(convertedValue);
+        }
+        else if (this.DefaultValue.HasValue)
+        {
+            this.SetValueTo(this.DefaultValue.Value);
+            this.InternalSetText(this.Value);
+        }
+        else
+        {
+            this.SetCurrentValue(ValueProperty, null);
+        }
+        this.OnValueChanged(this.Value, this.Value);
+
+        this.manualChange = false;
+    }
+
+    private bool ValidateText(string text, out T convertedValue)
+    {
+        convertedValue = T.Zero;
+
+        if (text == CultureInfo.CurrentUICulture.NumberFormat.PositiveSign
+            || text == CultureInfo.CurrentUICulture.NumberFormat.NegativeSign)
+        {
+            return true;
+        }
+
+        if (text.Count(c => c == CultureInfo.CurrentUICulture.NumberFormat.PositiveSign[0]) > 2
+            || text.Count(c => c == CultureInfo.CurrentUICulture.NumberFormat.NegativeSign[0]) > 2
+           // || text.Count(c => c == CultureInfo.CurrentUICulture.NumberFormat.NumberGroupSeparator[0]) > 1
+           )
+        {
+            return false;
+        }
+
+        var number = this.TryGetNumberFromText(text);
+
+        // If we are only accepting numbers then attempt to parse as an integer.
+        if (this.GetType() == typeof(NumericUpDown))
+        {
+            return this.ConvertNumber(number, out convertedValue);
+        }
+
+        if (number == CultureInfo.CurrentUICulture.NumberFormat.NumberDecimalSeparator
+            || number == CultureInfo.CurrentUICulture.NumberFormat.CurrencyDecimalSeparator
+            || number == CultureInfo.CurrentUICulture.NumberFormat.PercentDecimalSeparator
+            || number == (CultureInfo.CurrentUICulture.NumberFormat.NegativeSign + CultureInfo.CurrentUICulture.NumberFormat.NumberDecimalSeparator)
+            || number == (CultureInfo.CurrentUICulture.NumberFormat.PositiveSign + CultureInfo.CurrentUICulture.NumberFormat.NumberDecimalSeparator)
+           )
+        {
+            return true;
+        }
+
+        if (!double.TryParse(number, this.ParsingNumberStyle, CultureInfo.CurrentUICulture, out convertedValue))
+        {
+            return false;
+        }
+
+        return true;
+    }
+
+    protected abstract void ConvertToConcreteType(string text);
+
+
+    private const string RawRegexNumberString = @"[-+]?(?<![0-9][<DecimalSeparator><GroupSeparator>])[<DecimalSeparator><GroupSeparator>]?[0-9]+(?:[<DecimalSeparator><GroupSeparator>\s][0-9]+)*[<DecimalSeparator><GroupSeparator>]?[0-9]?(?:[eE][-+]?[0-9]+)?(?!\.[0-9])";
+    private static System.Text.RegularExpressions.Regex? _regexNumber = null;
+    private string TryGetNumberFromText(string text)
+    {
+        if (_regexNumber is null)
+        {
+            _regexNumber = new System.Text.RegularExpressions.Regex(RawRegexNumberString.Replace("<DecimalSeparator>", CultureInfo.CurrentUICulture.NumberFormat.NumberDecimalSeparator)
+                                                                                        .Replace("<GroupSeparator>", CultureInfo.CurrentUICulture.NumberFormat.NumberGroupSeparator),
+                                         System.Text.RegularExpressions.RegexOptions.Compiled);
+        }
+
+        var matches = _regexNumber.Matches(text);
+        return matches.Count > 0 ? matches[0].Value : text;
+    }
+
+    private bool ConvertNumber(string text, out double convertedValue)
+    {
+        if (text.Any(c => c == CultureInfo.CurrentUICulture.NumberFormat.NumberDecimalSeparator[0]
+                       || c == CultureInfo.CurrentUICulture.NumberFormat.PercentDecimalSeparator[0]
+                       || c == CultureInfo.CurrentUICulture.NumberFormat.CurrencyDecimalSeparator[0]))
+        {
+            convertedValue = 0d;
+            return false;
+        }
+
+        if (!long.TryParse(text, NumberStyles.Any, CultureInfo.CurrentUICulture, out var convertedInt))
+        {
+            convertedValue = convertedInt;
+            return false;
+        }
+
+        convertedValue = convertedInt;
+        return true;
+    }
+
     #endregion DependencyProperties
 
     #region Event : ValueChangedEvent
@@ -202,7 +393,7 @@ public class UpDownBase<T, TArithmetic> : UpDownBase
         if (_textBoxField != null)
         {
             _textBoxField.LostFocus += OnTextBoxFocusLost;
-            _textBoxField.Text = Value?.ToString();
+            this.UpdateText();
         }
 
     }
@@ -211,14 +402,18 @@ public class UpDownBase<T, TArithmetic> : UpDownBase
     {
         if (_textBoxField is { } textBoxField)
         {
-            if (TryParse(textBoxField.Text, CultureInfo.CurrentUICulture, out T? value))
-            {
-                SetCurrentValue(ValueProperty, value);
-            }
-            else
-            {
-                textBoxField.Text = Value?.ToString();
-            }
+            _textBoxField.TextChanged -= this.OnTextChanged;
+            this.InternalSetText(this.Value);
+            _textBoxField.TextChanged += this.OnTextChanged;
+            UpdateText();
+            //if (TryParse(textBoxField.Text, CultureInfo.CurrentUICulture, out T? value))
+            //{
+            //    SetCurrentValue(ValueProperty, value);
+            //}
+            //else
+            //{
+            //    textBoxField.Text = Value?.ToString();
+            //}
         }
     }
 
@@ -266,7 +461,7 @@ public class UpDownBase<T, TArithmetic> : UpDownBase
 [TemplatePart(Name = IncreaseButtonPartName, Type = typeof(RepeatButton))]
 [TemplatePart(Name = DecreaseButtonPartName, Type = typeof(RepeatButton))]
 [TemplatePart(Name = TextBoxPartName, Type = typeof(TextBox))]
-public class UpDownBase : Control
+public abstract class UpDownBase : Control
 {
     public const string IncreaseButtonPartName = "PART_IncreaseButton";
     public const string DecreaseButtonPartName = "PART_DecreaseButton";
@@ -345,6 +540,7 @@ public class UpDownBase : Control
     public static readonly DependencyProperty DecreaseContentProperty =
         DependencyProperty.Register(nameof(DecreaseContent), typeof(object), typeof(UpDownBase), new PropertyMetadata(null));
 
+
 }
 
 #if !NET8_0_OR_GREATER
@@ -359,6 +555,8 @@ public interface IArithmetic<T>
     T MinValue();
 
     T MaxValue();
+
+    T Zero();
 
     T One();
 
