@@ -25,7 +25,7 @@
     <StackPanel Margin="0,16,0,0"
                 DockPanel.Dock="Top"
                 Orientation="Horizontal">
-      
+
       <smtx:XamlDisplay Margin="10,5"
                         VerticalAlignment="Top"
                         UniqueKey="numericUpDown_default">
@@ -33,9 +33,11 @@
       </smtx:XamlDisplay>
 
       <smtx:XamlDisplay Margin="10,5"
-                  VerticalAlignment="Top"
-                  UniqueKey="decimalUpDown_default">
-        <materialDesign:DecimalUpDown ValueStep="0.5" Minimum="-2.5" Maximum="2.5" />
+                        VerticalAlignment="Top"
+                        UniqueKey="decimalUpDown_default">
+        <materialDesign:DecimalUpDown Maximum="2.5"
+                                      Minimum="-2.5"
+                                      ValueStep="0.5" />
       </smtx:XamlDisplay>
 
       <smtx:XamlDisplay Margin="10,5"
@@ -43,19 +45,46 @@
                         UniqueKey="numericUpDown_customButtonContent">
         <materialDesign:NumericUpDown>
           <materialDesign:NumericUpDown.IncreaseContent>
-            <Border BorderBrush="{DynamicResource MaterialDesign.Brush.Foreground}" BorderThickness="1" CornerRadius="20">
+            <Border BorderBrush="{DynamicResource MaterialDesign.Brush.Foreground}"
+                    BorderThickness="1"
+                    CornerRadius="20">
               <materialDesign:PackIcon Kind="ArrowUp" />
             </Border>
           </materialDesign:NumericUpDown.IncreaseContent>
           <materialDesign:NumericUpDown.DecreaseContent>
-            <Border BorderBrush="{DynamicResource MaterialDesign.Brush.Foreground}" BorderThickness="1" CornerRadius="20">
+            <Border BorderBrush="{DynamicResource MaterialDesign.Brush.Foreground}"
+                    BorderThickness="1"
+                    CornerRadius="20">
               <materialDesign:PackIcon Kind="ArrowDown" />
             </Border>
           </materialDesign:NumericUpDown.DecreaseContent>
         </materialDesign:NumericUpDown>
       </smtx:XamlDisplay>
-      
+
     </StackPanel>
+
+    <smtx:XamlDisplay Margin="10,5"
+                      VerticalAlignment="Top"
+                      UniqueKey="numericUpDown_default1111111">
+      <StackPanel>
+        <materialDesign:NumericUpDown materialDesign:HintAssist.Hint="NumericUpDown"
+                                      Style="{StaticResource MaterialDesignFilledNumericUpDown}"
+                                      Value="{Binding MyInt}" />
+        <TextBlock Text="{Binding MyInt}" />
+      </StackPanel>
+    </smtx:XamlDisplay>
+
+    <smtx:XamlDisplay Margin="10,5"
+                      VerticalAlignment="Top"
+                      UniqueKey="numericUpDown_default11111111">
+      <StackPanel>
+        <materialDesign:DecimalUpDown materialDesign:HintAssist.Hint="DecimalUpDown"
+                                      Style="{StaticResource MaterialDesignFilledDecimalUpDown}"
+                                      Value="{Binding MyDouble}"
+                                      StringFormat="C"/>
+        <TextBlock Text="{Binding MyDouble, StringFormat='C'}" />
+      </StackPanel>
+    </smtx:XamlDisplay>
 
   </DockPanel>
 </UserControl>

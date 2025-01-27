@@ -1,5 +1,8 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
+using System.Globalization;
 using MaterialDesignDemo.Domain;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace MaterialDesignDemo;
 
