@@ -30,6 +30,8 @@ public class DecimalArithmetic : IArithmetic<decimal>
 
     public decimal MaxValue() => decimal.MaxValue;
 
+    public decimal Zero() => 0m;
+
     public decimal One() => 1m;
 
     public decimal Max(decimal value1, decimal value2) => Math.Max(value1, value2);

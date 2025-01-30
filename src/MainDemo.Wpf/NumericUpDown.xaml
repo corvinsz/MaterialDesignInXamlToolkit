@@ -4,7 +4,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML" xmlns:materialdesigndemo="clr-namespace:MaterialDesignDemo" d:DataContext="{d:DesignInstance Type=materialdesigndemo:MyVM}"
              d:DesignHeight="800"
              d:DesignWidth="1000"
              mc:Ignorable="d">
@@ -60,6 +60,28 @@
       </smtx:XamlDisplay>
       
     </StackPanel>
+
+    <smtx:XamlDisplay Margin="10,5"
+                      VerticalAlignment="Top"
+                      UniqueKey="numericUpDown_default1111111">
+      <StackPanel>
+        <materialDesign:NumericUpDown materialDesign:HintAssist.Hint="NumericUpDown"
+                                      Style="{StaticResource MaterialDesignFilledNumericUpDown}"
+                                      Value="{Binding MyInt}" />
+        <TextBlock Text="{Binding MyInt}" />
+      </StackPanel>
+    </smtx:XamlDisplay>
+
+      <StackPanel Margin="10,5"
+                      VerticalAlignment="Top">
+        <materialDesign:DecimalUpDown materialDesign:HintAssist.Hint="DecimalUpDown"
+                                      Style="{StaticResource MaterialDesignFilledDecimalUpDown}"
+                                      Minimum="0"
+                                      Maximum="30"  Width="200"
+                                      Value="{Binding MyDecimal}"
+                                      StringFormat='C'/>
+        <TextBox Style="{x:Null}" Text="{Binding MyDecimal, StringFormat='{}{0:c}'}" Width="80" Margin="50" />
+      </StackPanel>
 
   </DockPanel>
 </UserControl>

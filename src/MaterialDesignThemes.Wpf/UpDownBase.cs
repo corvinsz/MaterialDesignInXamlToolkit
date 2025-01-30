@@ -6,6 +6,8 @@ namespace MaterialDesignThemes.Wpf;
 
 #if NET8_0_OR_GREATER
 using System.Numerics;
+using System.Text.RegularExpressions;
+
 public class UpDownBase<T> : UpDownBase
     where T : INumber<T>, IMinMaxValue<T>
 {
@@ -15,6 +17,7 @@ public class UpDownBase<T> : UpDownBase
 
     private static T MinValue => T.MinValue;
     private static T MaxValue => T.MaxValue;
+    private static T Zero => T.Zero;
     private static T One => T.One;
     private static T Max(T value1, T value2) => T.Max(value1, value2);
     private static T Clamp(T value, T min, T max) => T.Clamp(value, min, max);
@@ -34,6 +37,7 @@ public class UpDownBase<T, TArithmetic> : UpDownBase
 
     private static T MinValue => _arithmetic.MinValue();
     private static T MaxValue => _arithmetic.MaxValue();
+    private static T Zero => _arithmetic.Zero();
     private static T One => _arithmetic.One();
     private static T Max(T value1, T value2) => _arithmetic.Max(value1, value2);
     private static T Clamp(T value, T min, T max) => _arithmetic.Max(_arithmetic.Min(value, max), min);
@@ -115,7 +119,8 @@ public class UpDownBase<T, TArithmetic> : UpDownBase
 
         if (upDownBase._textBoxField is { } textBox)
         {
-            textBox.Text = e.NewValue.ToString();
+            textBox.Text = upDownBase.GetFormattedValueString((T)e.NewValue);
+            //textBox.Text = e.NewValue.ToString();
         }
 
         if (upDownBase._increaseButton is { } increaseButton)
@@ -168,6 +173,47 @@ public class UpDownBase<T, TArithmetic> : UpDownBase
 
     #endregion
 
+    #region DependencyProperty : StringFormat
+    private static CultureInfo GetCurrentUICulture => CultureInfo.CurrentUICulture;
+    public string? StringFormat
+    {
+        get => (string?)GetValue(StringFormatProperty);
+        set => SetValue(StringFormatProperty, value);
+    }
+    public static readonly DependencyProperty StringFormatProperty =
+        DependencyProperty.Register(nameof(StringFormat), typeof(string), SelfType, new PropertyMetadata(string.Empty));
+
+    private bool IsUsingStringFormat => !string.IsNullOrEmpty(StringFormat);
+
+
+    private static readonly System.Text.RegularExpressions.Regex _regexStringFormat =
+        new(@"\{0\s*(:(?<format>.*))?\}", System.Text.RegularExpressions.RegexOptions.Compiled);
+    private string? GetFormattedValueString(T newValue, CultureInfo culture = null)
+    {
+        culture ??= GetCurrentUICulture;
+        string? format = StringFormat?.Replace("{}", string.Empty);
+        if (!string.IsNullOrWhiteSpace(format))
+        {
+            var match = _regexStringFormat.Match(format);
+            if (match.Success)
+            {
+                // we have a format template such as "{0:N0}"
+                return string.Format(culture, format, newValue);
+            }
+
+            // we have a format such as "N0"
+            if (newValue is IFormattable formattable)
+            {
+                return formattable.ToString(format, culture);
+            }
+            //return newValue.ToString(format, culture);
+        }
+
+        return newValue.ToString();
+        //return newValue.ToString(culture);
+    }
+    #endregion
+
     #endregion DependencyProperties
 
     #region Event : ValueChangedEvent
@@ -202,7 +248,7 @@ public class UpDownBase<T, TArithmetic> : UpDownBase
         if (_textBoxField != null)
         {
             _textBoxField.LostFocus += OnTextBoxFocusLost;
-            _textBoxField.Text = Value?.ToString();
+            _textBoxField.Text = GetFormattedValueString(Value);
         }
 
     }
@@ -211,12 +257,67 @@ public class UpDownBase<T, TArithmetic> : UpDownBase
     {
         if (_textBoxField is { } textBoxField)
         {
-            if (TryParse(textBoxField.Text, CultureInfo.CurrentUICulture, out T? value))
+            T? number = Zero;
+            if (IsUsingStringFormat)
             {
-                SetCurrentValue(ValueProperty, CoerceNumericValue(this, value));
+                number = ExtractNumber(textBoxField.Text);
             }
-            textBoxField.Text = Value?.ToString();
+            else if (TryParse(textBoxField.Text, GetCurrentUICulture, out T? parsedValue))
+            {
+                number = parsedValue;
+            }
+            SetCurrentValue(ValueProperty, CoerceNumericValue(this, number));
+
+            /* e.g.:
+             * if the current `Value` equals `Maximum` and the user enters a number greater than `Maximum`
+             * then the new value is clamped to the `Maximum` and thus the DP `Value` doesn't change.
+             * This results in `OnNumericValueChanged` not being called and therefore the TextBox.Text is not updated
+             * Thats why we update the TextBox.Text manually here
+             */
+            if (Value.Equals(number) == false)
+            {
+                textBoxField.Text = GetFormattedValueString(Value);
+            }
         }
+    }
+
+    private static readonly System.Text.RegularExpressions.Regex _integerRegex = new(@"\d+", System.Text.RegularExpressions.RegexOptions.Compiled);
+    private static readonly System.Text.RegularExpressions.Regex _decimalRegex = new(@"\d+.\d+", System.Text.RegularExpressions.RegexOptions.Compiled);
+    private T ExtractNumber(string text)
+    {
+        //Try to find a decimal number
+        bool didFindDecimal = MatchAndParse(text, _decimalRegex, out T? parsedDecimal);
+        if (didFindDecimal)
+        {
+            return parsedDecimal;
+        }
+
+        //Try to find an integer number
+        //Even if the control is a DecimalUpDown, it is necessary to match integer values
+        //because the user could input "20" instead of "20.0" in a DecimalUpDown-control
+        bool didFindInteger = MatchAndParse(text, _integerRegex, out T? parsedInt);
+        if (didFindInteger)
+        {
+            return parsedInt;
+        }
+
+        //If no number was found, return 0
+        return Zero;
+    }
+
+    private static bool MatchAndParse(string text, System.Text.RegularExpressions.Regex regexToMatchNumber, out T? value)
+    {
+        value = Zero;
+        System.Text.RegularExpressions.Match match = regexToMatchNumber.Match(text);
+        if (match.Success)
+        {
+            if (TryParse(match.Value, GetCurrentUICulture, out T? parsedNumber))
+            {
+                value = parsedNumber;
+                return true;
+            }
+        }
+        return false;
     }
 
     private void IncreaseButtonOnClick(object sender, RoutedEventArgs e) => OnIncrease();
@@ -356,6 +457,8 @@ public interface IArithmetic<T>
     T MinValue();
 
     T MaxValue();
+
+    T Zero();
 
     T One();
 
