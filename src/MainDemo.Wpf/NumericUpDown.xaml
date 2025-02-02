@@ -25,7 +25,7 @@
     <StackPanel Margin="0,16,0,0"
                 DockPanel.Dock="Top"
                 Orientation="Horizontal">
-      
+
       <smtx:XamlDisplay Margin="10,5"
                         VerticalAlignment="Top"
                         UniqueKey="numericUpDown_default">
@@ -33,28 +33,96 @@
       </smtx:XamlDisplay>
 
       <smtx:XamlDisplay Margin="10,5"
-                  VerticalAlignment="Top"
-                  UniqueKey="decimalUpDown_default">
-        <materialDesign:DecimalUpDown ValueStep="0.5" Minimum="-2.5" Maximum="2.5" />
+                        VerticalAlignment="Top"
+                        UniqueKey="decimalUpDown_default4">
+        <StackPanel>
+          <materialDesign:DecimalUpDown LayoutMode="Grouped" />
+          <materialDesign:DecimalUpDown LayoutMode="Split" />
+          <materialDesign:DecimalUpDown LayoutMode="Stacked" />
+        </StackPanel>
       </smtx:XamlDisplay>
+
+      <smtx:XamlDisplay Margin="10,5"
+                        VerticalAlignment="Top"
+                        UniqueKey="decimalUpDown_default3">
+        <StackPanel>
+          <StackPanel.Resources>
+            <Style TargetType="materialDesign:DecimalUpDown" BasedOn="{StaticResource MaterialDesignFilledDecimalUpDown}">
+              <Setter Property="materialDesign:HintAssist.Hint" Value="Hint" />
+            </Style>
+          </StackPanel.Resources>
+          <materialDesign:DecimalUpDown LayoutMode="Grouped">
+            <!--<materialDesign:DecimalUpDown.IncreaseContent>
+              <Grid Background="Fuchsia">
+                <materialDesign:PackIcon Kind="ArrowUp" />
+              </Grid>
+            </materialDesign:DecimalUpDown.IncreaseContent>
+            <materialDesign:DecimalUpDown.DecreaseContent>
+              <Grid Background="Fuchsia">
+                <materialDesign:PackIcon Kind="ArrowDown" />
+              </Grid>
+            </materialDesign:DecimalUpDown.DecreaseContent>-->
+          </materialDesign:DecimalUpDown>
+          <materialDesign:DecimalUpDown LayoutMode="Split" />
+          <materialDesign:DecimalUpDown LayoutMode="Stacked" />
+        </StackPanel>
+      </smtx:XamlDisplay>
+
+      <smtx:XamlDisplay Margin="10,5"
+                        VerticalAlignment="Top"
+                        UniqueKey="decimalUpDown_default2">
+        <StackPanel>
+          <StackPanel.Resources>
+            <Style TargetType="materialDesign:DecimalUpDown" BasedOn="{StaticResource MaterialDesignFloatingHintDecimalUpDown}">
+              <Setter Property="materialDesign:HintAssist.Hint" Value="Hint" />
+            </Style>
+          </StackPanel.Resources>
+          <materialDesign:DecimalUpDown LayoutMode="Grouped" />
+          <materialDesign:DecimalUpDown LayoutMode="Split" />
+          <materialDesign:DecimalUpDown LayoutMode="Stacked" />
+        </StackPanel>
+      </smtx:XamlDisplay>
+
+      <smtx:XamlDisplay Margin="10,5"
+                        VerticalAlignment="Top"
+                        UniqueKey="decimalUpDown_default1">
+        <StackPanel>
+          <StackPanel.Resources>
+            <Style TargetType="materialDesign:DecimalUpDown" BasedOn="{StaticResource MaterialDesignOutlinedDecimalUpDown}">
+              <Setter Property="materialDesign:HintAssist.Hint" Value="Hint" />
+            </Style>
+          </StackPanel.Resources>
+          <materialDesign:DecimalUpDown LayoutMode="Grouped" />
+          <materialDesign:DecimalUpDown LayoutMode="Split" />
+          <materialDesign:DecimalUpDown LayoutMode="Stacked" />
+        </StackPanel>
+      </smtx:XamlDisplay>
+
+
+
+
 
       <smtx:XamlDisplay Margin="10,5"
                         VerticalAlignment="Top"
                         UniqueKey="numericUpDown_customButtonContent">
         <materialDesign:NumericUpDown>
           <materialDesign:NumericUpDown.IncreaseContent>
-            <Border BorderBrush="{DynamicResource MaterialDesign.Brush.Foreground}" BorderThickness="1" CornerRadius="20">
+            <Border BorderBrush="{DynamicResource MaterialDesign.Brush.Foreground}"
+                    BorderThickness="1"
+                    CornerRadius="20">
               <materialDesign:PackIcon Kind="ArrowUp" />
             </Border>
           </materialDesign:NumericUpDown.IncreaseContent>
           <materialDesign:NumericUpDown.DecreaseContent>
-            <Border BorderBrush="{DynamicResource MaterialDesign.Brush.Foreground}" BorderThickness="1" CornerRadius="20">
+            <Border BorderBrush="{DynamicResource MaterialDesign.Brush.Foreground}"
+                    BorderThickness="1"
+                    CornerRadius="20">
               <materialDesign:PackIcon Kind="ArrowDown" />
             </Border>
           </materialDesign:NumericUpDown.DecreaseContent>
         </materialDesign:NumericUpDown>
       </smtx:XamlDisplay>
-      
+
     </StackPanel>
 
   </DockPanel>

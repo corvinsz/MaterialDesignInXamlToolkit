@@ -13,9 +13,13 @@
          TargetType="{x:Type ButtonBase}"
          BasedOn="{StaticResource MaterialDesignFlatButton}">
     <Setter Property="Focusable" Value="False" />
-    <Setter Property="Height" Value="18" />
+    <Setter Property="MinHeight" Value="18" />
+    <Setter Property="Width" Value="{Binding RelativeSource={RelativeSource Mode=Self}, Path=Height}" />
     <Setter Property="Padding" Value="0" />
-    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="VerticalAlignment" Value="Stretch" />
+    <Setter Property="HorizontalAlignment" Value="Stretch" />
+    <Setter Property="Background" Value="{DynamicResource MaterialDesign.Brush.Primary}" />
+    <Setter Property="wpf:HintAssist.HintOpacity" Value="1" />
   </Style>
 
   <wpf:PackIcon x:Key="ContentIncrease"
@@ -40,15 +44,12 @@
     <Setter Property="Foreground" Value="{Binding RelativeSource={RelativeSource AncestorType={x:Type FrameworkElement}}, Path=(TextElement.Foreground)}" />
     <Setter Property="HorizontalContentAlignment" Value="Stretch" />
     <Setter Property="IncreaseContent" Value="{StaticResource ContentIncrease}" />
-    <Setter Property="MinWidth" Value="100" />
+    <Setter Property="MinWidth" Value="200" />
     <Setter Property="Padding" Value="{x:Static wpf:Constants.TextBoxDefaultPadding}" />
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="{x:Type wpf:UpDownBase}">
           <ControlTemplate.Resources>
-            <converters:ThicknessCloneConverter x:Key="NumericUpDownPaddingConverter"
-                                                AdditionalOffsetRight="55"
-                                                CloneEdges="All" />
             <converters:ThicknessCloneConverter x:Key="PartButtonMarginConverter"
                                                 CloneEdges="Top,Right,Bottom"
                                                 FixedLeft="0" />
@@ -56,9 +57,20 @@
             <converters:NonDefaultThicknessConverter x:Key="OutlinedBorderActiveThicknessConverter" DefaultThickness="{x:Static wpf:Constants.DefaultOutlinedBorderActiveThickness}" />
           </ControlTemplate.Resources>
           <Grid Background="{TemplateBinding Background}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition x:Name="columnA" />
+              <ColumnDefinition x:Name="columnB" />
+              <ColumnDefinition x:Name="columnC" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+              <RowDefinition Height="Auto" />
+              <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
             <TextBox x:Name="PART_TextBox"
-                     Padding="{TemplateBinding Padding, Converter={StaticResource NumericUpDownPaddingConverter}}"
-                     VerticalAlignment="Stretch"
+                     VerticalAlignment="Center"
+                     HorizontalAlignment="Stretch"
                      HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
                      VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
                      internal:InternalTextFieldAssist.IsMouseOver="{TemplateBinding IsMouseOver}"
@@ -101,20 +113,16 @@
                      Focusable="{TemplateBinding Focusable}"
                      Style="{DynamicResource NestedTextBoxStyle}" />
 
-            <StackPanel HorizontalAlignment="Right" Orientation="Horizontal">
-              <RepeatButton x:Name="PART_DecreaseButton"
-                            Margin="{TemplateBinding Padding, Converter={StaticResource PartButtonMarginConverter}}"
-                            Content="{TemplateBinding DecreaseContent}"
-                            Foreground="{Binding ElementName=PART_TextBox, Path=Foreground}"
-                            Opacity="{TemplateBinding wpf:HintAssist.HintOpacity}"
-                            Style="{DynamicResource NestedNumericUpDownButtonsStyle}" />
-              <RepeatButton x:Name="PART_IncreaseButton"
-                            Margin="{TemplateBinding Padding, Converter={StaticResource PartButtonMarginConverter}}"
-                            Content="{TemplateBinding IncreaseContent}"
-                            Foreground="{Binding ElementName=PART_TextBox, Path=Foreground}"
-                            Opacity="{TemplateBinding wpf:HintAssist.HintOpacity}"
-                            Style="{DynamicResource NestedNumericUpDownButtonsStyle}" />
-            </StackPanel>
+            <RepeatButton x:Name="PART_DecreaseButton"
+                          Content="{TemplateBinding DecreaseContent}"
+                          Foreground="{Binding ElementName=PART_TextBox, Path=Foreground}"
+                          Opacity="{TemplateBinding wpf:HintAssist.HintOpacity}"
+                          Style="{DynamicResource NestedNumericUpDownButtonsStyle}" />
+            <RepeatButton x:Name="PART_IncreaseButton"
+                          Content="{TemplateBinding IncreaseContent}"
+                          Foreground="{Binding ElementName=PART_TextBox, Path=Foreground}"
+                          Opacity="{TemplateBinding wpf:HintAssist.HintOpacity}"
+                          Style="{DynamicResource NestedNumericUpDownButtonsStyle}" />
           </Grid>
           <ControlTemplate.Triggers>
             <!-- PART_Button hovering -->
@@ -140,6 +148,48 @@
               <Setter TargetName="PART_IncreaseButton" Property="Opacity" Value="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(wpf:HintAssist.HintOpacity), Converter={x:Static converters:MathConverter.MultiplyInstance}, ConverterParameter={x:Static wpf:Constants.TextBoxNotEnabledOpacity}}" />
             </Trigger>
 
+            <!-- Triggers to switch layout -->
+            <!-- Split: Button - TextBox - Button -->
+            <Trigger Property="LayoutMode" Value="{x:Static wpf:UpDownLayoutMode.Split}">
+              <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="1" />
+              <Setter TargetName="PART_DecreaseButton" Property="Grid.Column" Value="0" />
+              <Setter TargetName="PART_IncreaseButton" Property="Grid.Column" Value="2" />
+              <Setter TargetName="columnA" Property="Width" Value="Auto" />
+              <Setter TargetName="columnB" Property="Width" Value="*" />
+              <Setter TargetName="columnC" Property="Width" Value="Auto" />
+            </Trigger>
+
+            <!-- Grouped: TextBox - Button - Button -->
+            <Trigger Property="LayoutMode" Value="{x:Static wpf:UpDownLayoutMode.Grouped}">
+              <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="0" />
+              <Setter TargetName="PART_DecreaseButton" Property="Grid.Column" Value="1" />
+              <Setter TargetName="PART_IncreaseButton" Property="Grid.Column" Value="2" />
+              <Setter TargetName="columnA" Property="Width" Value="*" />
+              <Setter TargetName="columnB" Property="Width" Value="Auto" />
+              <Setter TargetName="columnC" Property="Width" Value="Auto" />
+            </Trigger>
+
+            <!--
+              Stacked:
+              TextBox Button
+                      Button
+            -->
+            <Trigger Property="LayoutMode" Value="{x:Static wpf:UpDownLayoutMode.Stacked}">
+              <Setter TargetName="PART_TextBox" Property="Grid.Column" Value="0" />
+              <Setter TargetName="PART_TextBox" Property="Grid.RowSpan" Value="2" />
+
+              <Setter TargetName="PART_DecreaseButton" Property="Grid.Column" Value="1" />
+              <Setter TargetName="PART_DecreaseButton" Property="Grid.Row" Value="0" />
+
+              <Setter TargetName="PART_IncreaseButton" Property="Grid.Column" Value="1" />
+              <Setter TargetName="PART_IncreaseButton" Property="Grid.Row" Value="1" />
+
+              <Setter TargetName="columnA" Property="Width" Value="*" />
+              <Setter TargetName="columnB" Property="Width" Value="Auto" />
+              <Setter TargetName="columnC" Property="Width" Value="Auto" />
+            </Trigger>
+
+
             <!-- Validation.HasError -->
             <Trigger Property="Validation.HasError" Value="True">
               <Setter TargetName="PART_TextBox" Property="BorderBrush" Value="{DynamicResource MaterialDesign.Brush.ValidationError}" />
@@ -160,7 +210,7 @@
     <Setter Property="wpf:TextFieldAssist.UnderlineBrush" Value="{DynamicResource MaterialDesign.Brush.Primary}" />
   </Style>
 
-  
+
   <Style x:Key="MaterialDesignFloatingHintUpDownBase"
          TargetType="{x:Type wpf:UpDownBase}"
          BasedOn="{StaticResource MaterialDesignNumericUpDown}">
@@ -178,8 +228,8 @@
          BasedOn="{StaticResource MaterialDesignFloatingHintUpDownBase}" />
 
   <Style x:Key="MaterialDesignFloatingHintDecimalUpDown"
-       TargetType="{x:Type wpf:DecimalUpDown}"
-       BasedOn="{StaticResource MaterialDesignFloatingHintUpDownBase}" />
+         TargetType="{x:Type wpf:DecimalUpDown}"
+         BasedOn="{StaticResource MaterialDesignFloatingHintUpDownBase}" />
 
 
   <Style x:Key="MaterialDesignFilledUpDownBase"
@@ -205,7 +255,7 @@
          TargetType="{x:Type wpf:DecimalUpDown}"
          BasedOn="{StaticResource MaterialDesignFilledUpDownBase}" />
 
-  
+
   <Style x:Key="MaterialDesignOutlinedUpDownBase"
          TargetType="{x:Type wpf:UpDownBase}"
          BasedOn="{StaticResource MaterialDesignFloatingHintUpDownBase}">

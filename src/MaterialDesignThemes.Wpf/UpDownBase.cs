@@ -261,6 +261,19 @@ public class UpDownBase<T, TArithmetic> : UpDownBase
     }
 }
 
+public enum UpDownLayoutMode
+{
+    // TextBox Button Button
+    Grouped,
+
+    // Button TextBox Button
+    Split,
+
+    // TextBox Button
+    //         Button
+    Stacked
+}
+
 [TemplatePart(Name = IncreaseButtonPartName, Type = typeof(RepeatButton))]
 [TemplatePart(Name = DecreaseButtonPartName, Type = typeof(RepeatButton))]
 [TemplatePart(Name = TextBoxPartName, Type = typeof(TextBox))]
@@ -343,6 +356,13 @@ public class UpDownBase : Control
     public static readonly DependencyProperty DecreaseContentProperty =
         DependencyProperty.Register(nameof(DecreaseContent), typeof(object), typeof(UpDownBase), new PropertyMetadata(null));
 
+    public UpDownLayoutMode LayoutMode
+    {
+        get => (UpDownLayoutMode)GetValue(LayoutModeProperty);
+        set => SetValue(LayoutModeProperty, value);
+    }
+    public static readonly DependencyProperty LayoutModeProperty =
+        DependencyProperty.Register(nameof(LayoutMode), typeof(UpDownLayoutMode), typeof(UpDownBase), new PropertyMetadata(UpDownLayoutMode.Grouped));
 }
 
 #if !NET8_0_OR_GREATER
