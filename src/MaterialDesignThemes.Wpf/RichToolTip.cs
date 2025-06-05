@@ -242,6 +242,14 @@ public class RichToolTip : ContentControl
         set => SetValue(PopupElevationProperty, value);
     }
 
+    public PopupAnimation PopupAnimation
+    {
+        get => (PopupAnimation)GetValue(PopupAnimationProperty);
+        set => SetValue(PopupAnimationProperty, value);
+    }
+    public static readonly DependencyProperty PopupAnimationProperty =
+        DependencyProperty.Register("PopupAnimation", typeof(PopupAnimation), typeof(RichToolTip), new PropertyMetadata(PopupAnimation.Fade));
+
     /// <summary>
     /// Framework use. Provides the method used to position the popup.
     /// </summary>

@@ -33,6 +33,11 @@ namespace MaterialDesignDemo
             {
                 RichToolTipPlacementMode.Items.Add(item);
             }
+
+            foreach (var item in Enum.GetValues(typeof(PopupAnimation)))
+            {
+                PopupAnimation.Items.Add(item);
+            }
         }
     }
 }

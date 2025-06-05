@@ -57,7 +57,7 @@
                          IsOpen="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IsPopupOpen, Mode=TwoWay}"
                          Placement="Custom"
                          PlacementTarget="{Binding ElementName=PART_Toggle}"
-                         PopupAnimation="Fade">
+                         PopupAnimation="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=PopupAnimation}">
               <Grid Focusable="False">
                 <wpf:Card Margin="{TemplateBinding PopupElevation, Converter={StaticResource ElevationMarginConverter}}"
                           Padding="{TemplateBinding Padding}"
@@ -68,11 +68,6 @@
                           Foreground="{DynamicResource MaterialDesign.Brush.Primary.Foreground}"
                           RenderOptions.ClearTypeHint="Enabled"
                           UniformCornerRadius="{TemplateBinding PopupUniformCornerRadius}" />
-                <!--<ContentControl x:Name="PART_PopupContentControl"
-                                Content="{TemplateBinding PopupContent}"
-                                ContentTemplate="{TemplateBinding PopupContentTemplate}"
-                                Opacity="0"
-                                Visibility="{TemplateBinding IsEnabled, Converter={x:Static converters:BooleanToVisibilityConverter.CollapsedInstance}}" />-->
               </Grid>
             </wpf:PopupEx>
           </Grid>

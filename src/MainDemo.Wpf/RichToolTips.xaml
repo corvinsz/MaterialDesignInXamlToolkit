@@ -34,6 +34,7 @@
                         UniqueKey="richToolTip_1">
         <materialDesign:RichToolTip IsPopupOpen="{Binding ElementName=tbIsPopupOpen, Path=IsChecked}"
                                     PlacementMode="{Binding ElementName=RichToolTipPlacementMode, Path=SelectedItem, Mode=TwoWay}"
+                                    PopupAnimation="{Binding ElementName=PopupAnimation, Path=SelectedItem, Mode=TwoWay}"
                                     PopupElevation="{Binding ElementName=ElevationComboBox, Path=SelectedItem, Mode=TwoWay}"
                                     PopupHorizontalOffset="{Binding ElementName=PopupHorizontalOffset, Path=Value, Mode=TwoWay}"
                                     PopupUniformCornerRadius="{Binding ElementName=UniformCornerRadiusComboBox, Path=Value, Mode=TwoWay}"
@@ -126,6 +127,12 @@
           <ComboBox x:Name="RichToolTipPlacementMode"
                     Margin="{StaticResource Spacer}"
                     materialDesign:HintAssist.Hint="RichToolTipPlacementMode"
+                    SelectedIndex="1"
+                    Style="{StaticResource MaterialDesignFilledComboBox}" />
+
+          <ComboBox x:Name="PopupAnimation"
+                    Margin="{StaticResource Spacer}"
+                    materialDesign:HintAssist.Hint="PopupAnimation"
                     SelectedIndex="1"
                     Style="{StaticResource MaterialDesignFilledComboBox}" />
         </StackPanel>
