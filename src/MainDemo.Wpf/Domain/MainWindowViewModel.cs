@@ -450,6 +450,14 @@ public partial class MainWindowViewModel : ObservableObject
             DocumentationLink.ApiLink<DecimalUpDown>(),
             DocumentationLink.ApiLink<UpDownBase>()
         ]);
+
+        yield return new DemoItem(
+            "RichToolTip",
+            typeof(RichToolTip),
+            [
+                DocumentationLink.DemoPageLink<RichToolTip>(),
+                DocumentationLink.StyleLink("RichToolTip"),
+            ]);
     }
 
     private bool DemoItemsFilter(object obj)
