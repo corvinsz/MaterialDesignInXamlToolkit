@@ -453,7 +453,7 @@ public partial class MainWindowViewModel : ObservableObject
 
         yield return new DemoItem(
             "RichToolTip",
-            typeof(RichToolTip),
+            typeof(RichToolTips),
             [
                 DocumentationLink.DemoPageLink<RichToolTip>(),
                 DocumentationLink.StyleLink("RichToolTip"),

@@ -22,9 +22,17 @@ namespace MaterialDesignDemo
     {
         public RichToolTips()
         {
-            ElevationComboBox.ItemsSource = Enum.GetValues(typeof(MaterialDesignThemes.Wpf.Elevation));
-
             InitializeComponent();
+
+            foreach (var item in Enum.GetValues(typeof(MaterialDesignThemes.Wpf.Elevation)))
+            {
+                ElevationComboBox.Items.Add(item);
+            }
+
+            foreach (var item in Enum.GetValues(typeof(MaterialDesignThemes.Wpf.RichToolTipPlacementMode)))
+            {
+                RichToolTipPlacementMode.Items.Add(item);
+            }
         }
     }
 }

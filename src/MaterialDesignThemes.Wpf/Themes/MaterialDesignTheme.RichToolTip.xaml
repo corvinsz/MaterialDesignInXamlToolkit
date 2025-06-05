@@ -29,7 +29,7 @@
     <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.Primary.Foreground}" />
     <Setter Property="PopupElevation" Value="Dp6" />
     <Setter Property="Padding" Value="16,12,16,8" />
-    <Setter Property="PopupUniformCornerRadius" Value="4" />
+    <Setter Property="PopupUniformCornerRadius" Value="8" />
     <Setter Property="PlacementMode" Value="Top" />
     <Setter Property="Template">
       <Setter.Value>
