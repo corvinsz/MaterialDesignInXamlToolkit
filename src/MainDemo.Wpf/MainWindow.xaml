@@ -47,6 +47,11 @@
   <materialDesign:DialogHost DialogTheme="Inherit"
                              Identifier="RootDialog"
                              SnackbarMessageQueue="{Binding ElementName=MainSnackbar, Path=MessageQueue}">
+    <materialDesign:DialogHost.PopupStyle>
+      <Style TargetType="{x:Type materialDesign:PopupEx}" BasedOn="{StaticResource MaterialDesignDialogHostPopup}">
+        <Setter Property="AllowsTransparency" Value="False" />
+      </Style>
+    </materialDesign:DialogHost.PopupStyle>
 
     <materialDesign:DrawerHost IsLeftDrawerOpen="{Binding ElementName=MenuToggleButton, Path=IsChecked}">
       <materialDesign:DrawerHost.LeftDrawerContent>

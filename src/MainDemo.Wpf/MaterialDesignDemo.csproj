@@ -49,4 +49,7 @@
     <PackageReference Include="ShowMeTheXAML.AvalonEdit" />
     <PackageReference Include="ShowMeTheXAML.MSBuild" />
   </ItemGroup>
+  <ItemGroup>
+    <Reference Include="WindowsFormsIntegration" />
+  </ItemGroup>
 </Project>
