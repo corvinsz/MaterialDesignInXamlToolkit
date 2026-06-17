@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using MaterialDesignThemes.Wpf;
 
 namespace MaterialDesignDemo
 {
@@ -24,6 +25,11 @@ namespace MaterialDesignDemo
         {
             InitializeComponent();
             //(wfhSample.Child as System.Windows.Forms.WebBrowser).Navigate("http://www.wpf-tutorial.com");
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            DialogHost.Close("RootDialog");
         }
     }
 }

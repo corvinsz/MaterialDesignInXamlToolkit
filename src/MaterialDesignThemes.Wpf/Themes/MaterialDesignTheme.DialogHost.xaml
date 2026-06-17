@@ -191,6 +191,8 @@
                         <DataTrigger Binding="{Binding AllowsTransparency, ElementName=PART_Popup}"
                                      Value="False">
                           <Setter Property="Margin" Value="0" />
+                          <Setter Property="BorderBrush" Value="{DynamicResource MaterialDesign.Brush.Foreground}" />
+                          <Setter Property="BorderThickness" Value="2" />
                         </DataTrigger>
                       </Style.Triggers>
                     </Style>
