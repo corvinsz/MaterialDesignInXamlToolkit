@@ -1,10 +1,13 @@
 ﻿namespace MaterialDesignThemes.Wpf;
 
+/// <summary>
+/// Provides attached properties for customizing TreeView appearance and behavior.
+/// </summary>
 public static class TreeViewAssist
 {
     #region AdditionalTemplate
     /// <summary>
-    /// Allows additional rendering for each tree node, outside of the rippled part of the node which responds to user selection.
+    /// Specifies an additional template displayed alongside each tree node.
     /// </summary>
     /// <remarks>
     /// The content to be rendered is the same of the <see cref="TreeViewItem"/>; i.e the Header property, or
@@ -43,7 +46,7 @@ public static class TreeViewAssist
     #region AdditionalTemplateSelector
 
     /// <summary>
-    /// Allows additional rendering for each tree node, outside of the rippled part of the node which responds to user selection.
+    /// Specifies a selector for choosing the additional template for each tree node.
     /// </summary>
     /// <remarks>
     /// The content to be rendered is the same of the <see cref="TreeViewItem"/>; i.e the Header property, or
@@ -84,8 +87,7 @@ public static class TreeViewAssist
     private static readonly Lazy<DataTemplate> NoAdditionalTemplateProvider = new Lazy<DataTemplate>(CreateEmptyGridDataTemplate);
 
     /// <summary>
-    /// To be used at <see cref="TreeViewItem"/> level, or to be returned by <see cref="AdditionalTemplateSelector"/>
-    /// implementors when the additional template associated with a tree should not be used.
+    /// Represents a placeholder that suppresses the additional template.
     /// </summary>
     public static readonly DataTemplate SuppressAdditionalTemplate = NoAdditionalTemplateProvider.Value;
 
@@ -111,6 +113,9 @@ public static class TreeViewAssist
     public static void SetExpanderSize(DependencyObject element, double value)
         => element.SetValue(ExpanderSizeProperty, value);
 
+    /// <summary>
+    /// Controls the size of the TreeView expander.
+    /// </summary>
     public static readonly DependencyProperty ExpanderSizeProperty =
         DependencyProperty.RegisterAttached("ExpanderSize", typeof(double), typeof(TreeViewAssist), new PropertyMetadata(default(double)));
 
@@ -123,6 +128,9 @@ public static class TreeViewAssist
     public static void SetShowSelection(DependencyObject element, bool value)
         => element.SetValue(ShowSelectionProperty, value);
 
+    /// <summary>
+    /// Determines whether the selected item is visually highlighted.
+    /// </summary>
     public static readonly DependencyProperty ShowSelectionProperty =
         DependencyProperty.RegisterAttached("ShowSelection", typeof(bool), typeof(TreeViewAssist), new PropertyMetadata(true));
 
@@ -136,7 +144,7 @@ public static class TreeViewAssist
         => element.SetValue(HasNoItemsExpanderVisibilityProperty, value);
 
     /// <summary>
-    /// Allows controlling the visibility of the expander arrow on TreeViewItems that do not have any children.
+    /// Controls the expander visibility for items without children.
     /// </summary>
     public static readonly DependencyProperty HasNoItemsExpanderVisibilityProperty =
         DependencyProperty.RegisterAttached("HasNoItemsExpanderVisibility", typeof(Visibility), typeof(TreeViewAssist), new PropertyMetadata(Visibility.Hidden));

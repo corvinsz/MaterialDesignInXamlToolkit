@@ -2,8 +2,14 @@
 
 namespace MaterialDesignThemes.Wpf;
 
+/// <summary>
+/// Provides attached properties for customizing the appearance of <see cref="ListView"/> controls.
+/// </summary>
 public static class ListViewAssist
 {
+    /// <summary>
+    /// Defines the padding applied to <see cref="ListViewItem"/> elements.
+    /// </summary>
     public static readonly DependencyProperty ListViewItemPaddingProperty = DependencyProperty.RegisterAttached(
         "ListViewItemPadding",
         typeof(Thickness),
@@ -20,6 +26,9 @@ public static class ListViewAssist
         return (Thickness)element.GetValue(ListViewItemPaddingProperty);
     }
 
+    /// <summary>
+    /// Defines the background brush applied to the header row.
+    /// </summary>
     public static readonly DependencyProperty HeaderRowBackgroundProperty = DependencyProperty.RegisterAttached(
         "HeaderRowBackground",
         typeof(Brush),

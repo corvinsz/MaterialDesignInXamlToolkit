@@ -4,6 +4,9 @@ using System.Windows.Media.Effects;
 
 namespace MaterialDesignThemes.Wpf;
 
+/// <summary>
+/// Provides attached properties for configuring shadow appearance and animations.
+/// </summary>
 public static class ShadowAssist
 {
     #region AttachedProperty : LocalInfoPropertyKey
@@ -25,6 +28,9 @@ public static class ShadowAssist
     #endregion
 
     #region AttachedProperty : DarkenProperty
+    /// <summary>
+    /// Determines whether the shadow opacity is increased for a darker effect.
+    /// </summary>
     public static readonly DependencyProperty DarkenProperty = DependencyProperty.RegisterAttached(
         "Darken", typeof(bool), typeof(ShadowAssist), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.AffectsRender, DarkenPropertyChangedCallback));
 
@@ -78,6 +84,9 @@ public static class ShadowAssist
     #endregion
 
     #region AttachedProperty : CacheModeProperty
+    /// <summary>
+    /// Defines the cache mode used for shadow rendering.
+    /// </summary>
     public static readonly DependencyProperty CacheModeProperty = DependencyProperty.RegisterAttached(
         "CacheMode", typeof(CacheMode), typeof(ShadowAssist), new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits));
 
@@ -93,6 +102,9 @@ public static class ShadowAssist
     #endregion
 
     #region AttachedProperty : ShadowAnimationDurationProperty
+    /// <summary>
+    /// Defines the duration of shadow animations.
+    /// </summary>
     public static readonly DependencyProperty ShadowAnimationDurationProperty =
        DependencyProperty.RegisterAttached(
            name: "ShadowAnimationDuration",

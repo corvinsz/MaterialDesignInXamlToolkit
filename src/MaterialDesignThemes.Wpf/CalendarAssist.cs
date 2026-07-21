@@ -2,14 +2,24 @@ using System.Windows.Media;
 
 namespace MaterialDesignThemes.Wpf;
 
+/// <summary>
+/// Defines the layout direction used by calendar controls.
+/// </summary>
 public enum CalendarOrientation
 {
     Vertical,
     Horizontal
 }
+
+/// <summary>
+/// Provides attached properties for customizing calendar appearance and layout.
+/// </summary>
 public static class CalendarAssist
 {
     #region Header Visibility
+    /// <summary>
+    /// Controls whether the calendar header is displayed.
+    /// </summary>
     public static readonly DependencyProperty IsHeaderVisibleProperty = DependencyProperty.RegisterAttached(
         "IsHeaderVisible", typeof(bool), typeof(CalendarAssist), new PropertyMetadata(true));
 
@@ -19,6 +29,9 @@ public static class CalendarAssist
 
     #region HeaderBackground
 
+    /// <summary>
+    /// Defines the background brush of the calendar header.
+    /// </summary>
     public static readonly DependencyProperty HeaderBackgroundProperty = DependencyProperty.RegisterAttached(
         "HeaderBackground", typeof(Brush), typeof(CalendarAssist), new FrameworkPropertyMetadata(default(Brush)));
 
@@ -27,6 +40,9 @@ public static class CalendarAssist
     #endregion
 
     #region HeaderForeground
+    /// <summary>
+    /// Defines the foreground brush of the calendar header.
+    /// </summary>
     public static readonly DependencyProperty HeaderForegroundProperty = DependencyProperty.RegisterAttached(
         "HeaderForeground", typeof(Brush), typeof(CalendarAssist), new FrameworkPropertyMetadata(default(Brush)));
 
@@ -35,6 +51,9 @@ public static class CalendarAssist
     #endregion
 
     #region SelectionColor
+    /// <summary>
+    /// Defines the brush used for selected calendar items.
+    /// </summary>
     public static readonly DependencyProperty SelectionColorProperty = DependencyProperty.RegisterAttached(
         "SelectionColor", typeof(Brush), typeof(CalendarAssist), new FrameworkPropertyMetadata(default(Brush)));
 
@@ -43,6 +62,9 @@ public static class CalendarAssist
     #endregion
 
     #region SelectionForegroundColor
+    /// <summary>
+    /// Defines the foreground brush used for selected calendar items.
+    /// </summary>
     public static readonly DependencyProperty SelectionForegroundColorProperty = DependencyProperty.RegisterAttached(
         "SelectionForegroundColor", typeof(Brush), typeof(CalendarAssist), new FrameworkPropertyMetadata(default(Brush)));
 
@@ -51,6 +73,9 @@ public static class CalendarAssist
     #endregion
 
     #region Orientation
+    /// <summary>
+    /// Defines the orientation used to display the calendar.
+    /// </summary>
     public static readonly DependencyProperty OrientationProperty = DependencyProperty.RegisterAttached(
         "Orientation", typeof(CalendarOrientation), typeof(CalendarAssist), new FrameworkPropertyMetadata(default(CalendarOrientation)));
 

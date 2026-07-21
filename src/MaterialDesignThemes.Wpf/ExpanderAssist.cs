@@ -9,12 +9,18 @@ public enum ExpanderButtonPosition
     End
 }
 
+/// <summary>
+/// Provides attached properties for configuring Expander appearance and behavior.
+/// </summary>
 public static class ExpanderAssist
 {
     private static readonly Thickness DefaultHorizontalHeaderPadding = new(24, 12, 24, 12);
     private static readonly Thickness DefaultVerticalHeaderPadding = new(12, 24, 12, 24);
 
     #region AttachedProperty : HorizontalHeaderPaddingProperty
+    /// <summary>
+    /// Defines the horizontal header padding of the Expander.
+    /// </summary>
     public static readonly DependencyProperty HorizontalHeaderPaddingProperty
         = DependencyProperty.RegisterAttached("HorizontalHeaderPadding", typeof(Thickness), typeof(ExpanderAssist),
             new FrameworkPropertyMetadata(DefaultHorizontalHeaderPadding, FrameworkPropertyMetadataOptions.Inherits));
@@ -26,6 +32,9 @@ public static class ExpanderAssist
     #endregion
 
     #region AttachedProperty : VerticalHeaderPaddingProperty
+    /// <summary>
+    /// Defines the vertical header padding of the Expander.
+    /// </summary>
     public static readonly DependencyProperty VerticalHeaderPaddingProperty
         = DependencyProperty.RegisterAttached("VerticalHeaderPadding", typeof(Thickness), typeof(ExpanderAssist),
             new FrameworkPropertyMetadata(DefaultVerticalHeaderPadding, FrameworkPropertyMetadataOptions.Inherits));
@@ -37,6 +46,9 @@ public static class ExpanderAssist
     #endregion
 
     #region AttachedProperty : HeaderFontSizeProperty
+    /// <summary>
+    /// Defines the header font size of the Expander.
+    /// </summary>
     public static readonly DependencyProperty HeaderFontSizeProperty
         = DependencyProperty.RegisterAttached("HeaderFontSize", typeof(double), typeof(ExpanderAssist),
             new FrameworkPropertyMetadata(15.0));
@@ -48,6 +60,9 @@ public static class ExpanderAssist
     #endregion
 
     #region AttachedProperty : HeaderBackgroundProperty
+    /// <summary>
+    /// Defines the header background brush of the Expander.
+    /// </summary>
     public static readonly DependencyProperty HeaderBackgroundProperty
         = DependencyProperty.RegisterAttached("HeaderBackground", typeof(Brush), typeof(ExpanderAssist));
 
@@ -58,6 +73,9 @@ public static class ExpanderAssist
     #endregion
 
     #region AttachedProperty : ExpanderButtonContentProperty
+    /// <summary>
+    /// Defines the content displayed by the Expander button.
+    /// </summary>
     public static readonly DependencyProperty ExpanderButtonContentProperty
         = DependencyProperty.RegisterAttached("ExpanderButtonContent", typeof(object), typeof(ExpanderAssist));
 
@@ -68,6 +86,9 @@ public static class ExpanderAssist
     #endregion
 
     #region AttachedProperty : ExpanderButtonPositionProperty
+    /// <summary>
+    /// Defines the position of the Expander button.
+    /// </summary>
     public static readonly DependencyProperty ExpanderButtonPositionProperty
         = DependencyProperty.RegisterAttached("ExpanderButtonPosition", typeof(ExpanderButtonPosition), typeof(ExpanderAssist), new PropertyMetadata(ExpanderButtonPosition.Default));
 

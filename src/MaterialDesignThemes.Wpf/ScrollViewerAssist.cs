@@ -2,6 +2,9 @@ using System.Windows.Interop;
 
 namespace MaterialDesignThemes.Wpf;
 
+/// <summary>
+/// Provides attached properties for configuring scroll viewer behavior and appearance.
+/// </summary>
 public static class ScrollViewerAssist
 {
     internal static readonly DependencyProperty HorizontalOffsetProperty = DependencyProperty.RegisterAttached(
@@ -19,6 +22,9 @@ public static class ScrollViewerAssist
     internal static double GetSyncHorizontalOffset(DependencyObject element)
         => (double)element.GetValue(HorizontalOffsetProperty);
 
+    /// <summary>
+    /// Enables automatic hiding behavior for scroll bars.
+    /// </summary>
     public static readonly DependencyProperty IsAutoHideEnabledProperty = DependencyProperty.RegisterAttached(
         "IsAutoHideEnabled", typeof(bool), typeof(ScrollViewerAssist), new PropertyMetadata(default(bool)));
 
@@ -28,6 +34,9 @@ public static class ScrollViewerAssist
     public static bool GetIsAutoHideEnabled(DependencyObject element)
         => (bool)element.GetValue(IsAutoHideEnabledProperty);
 
+    /// <summary>
+    /// Controls the visibility of the scroll viewer corner rectangle.
+    /// </summary>
     public static readonly DependencyProperty CornerRectangleVisibilityProperty = DependencyProperty.RegisterAttached(
         "CornerRectangleVisibility", typeof(Visibility), typeof(ScrollViewerAssist), new PropertyMetadata(default(Visibility)));
 
@@ -37,6 +46,9 @@ public static class ScrollViewerAssist
     public static Visibility GetCornerRectangleVisibility(DependencyObject element)
         => (Visibility)element.GetValue(CornerRectangleVisibilityProperty);
 
+    /// <summary>
+    /// Determines whether separators are displayed in the scroll viewer.
+    /// </summary>
     public static readonly DependencyProperty ShowSeparatorsProperty = DependencyProperty.RegisterAttached(
         "ShowSeparators", typeof(bool), typeof(ScrollViewerAssist), new PropertyMetadata(default(bool)));
 
@@ -46,6 +58,9 @@ public static class ScrollViewerAssist
     public static bool GetShowSeparators(DependencyObject element)
         => (bool)element.GetValue(ShowSeparatorsProperty);
 
+    /// <summary>
+    /// Defines how padding is applied within the scroll viewer.
+    /// </summary>
     public static readonly DependencyProperty PaddingModeProperty = DependencyProperty.RegisterAttached(
         "PaddingMode", typeof(PaddingMode), typeof(ScrollViewerAssist), new PropertyMetadata(PaddingMode.Content));
 
@@ -55,6 +70,9 @@ public static class ScrollViewerAssist
     public static PaddingMode GetPaddingMode(DependencyObject element)
         => (PaddingMode)element.GetValue(PaddingModeProperty);
 
+    /// <summary>
+    /// Determines whether scroll viewer padding is ignored.
+    /// </summary>
     public static readonly DependencyProperty IgnorePaddingProperty = DependencyProperty.RegisterAttached(
         "IgnorePadding", typeof(bool), typeof(ScrollViewerAssist), new PropertyMetadata(true));
 
@@ -67,6 +85,9 @@ public static class ScrollViewerAssist
     private static readonly DependencyProperty BubbleVerticalScrollHookProperty = DependencyProperty.RegisterAttached(
         "BubbleVerticalScrollHook", typeof(HwndSourceHook), typeof(ScrollViewerAssist), new PropertyMetadata(null));
 
+    /// <summary>
+    /// Enables horizontal scrolling support for the scroll viewer.
+    /// </summary>
     public static readonly DependencyProperty SupportHorizontalScrollProperty = DependencyProperty.RegisterAttached(
         "SupportHorizontalScroll", typeof(bool), typeof(ScrollViewerAssist), new PropertyMetadata(false, OnSupportHorizontalScrollChanged));
 
@@ -182,9 +203,12 @@ public static class ScrollViewerAssist
         }
     }
 
+    /// <summary>
+    /// Enables vertical scroll event bubbling to parent controls.
+    /// </summary>
     public static readonly DependencyProperty BubbleVerticalScrollProperty = DependencyProperty.RegisterAttached(
         "BubbleVerticalScroll", typeof(bool), typeof(ScrollViewerAssist), new PropertyMetadata(false, OnBubbleVerticalScrollChanged));
-    
+
     private static void OnBubbleVerticalScrollChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
         if (d is ScrollViewer sv)

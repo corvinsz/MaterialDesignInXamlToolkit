@@ -1,10 +1,13 @@
 ﻿namespace MaterialDesignThemes.Wpf;
 
+/// <summary>
+/// Provides attached properties for configuring Flipper appearance.
+/// </summary>
 public static class FlipperAssist
 {
     #region AttachedProperty : UniformCornerRadiusProperty
     /// <summary>
-    /// Controls the (uniform) corner radius of the contained card
+    /// Defines the uniform corner radius of the contained card.
     /// </summary>
     public static readonly DependencyProperty UniformCornerRadiusProperty
         = DependencyProperty.RegisterAttached("UniformCornerRadius", typeof(double), typeof(FlipperAssist),
@@ -16,7 +19,7 @@ public static class FlipperAssist
 
     #region AttachedProperty : CardStyleProperty
     /// <summary>
-    /// Controls the style of the contained card
+    /// Defines the style applied to the contained card.
     /// </summary>
     public static readonly DependencyProperty CardStyleProperty
         = DependencyProperty.RegisterAttached("CardStyle", typeof(Style), typeof(FlipperAssist),

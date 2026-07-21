@@ -2,8 +2,14 @@
 
 namespace MaterialDesignThemes.Wpf;
 
+/// <summary>
+/// Provides attached properties for configuring slider behavior and appearance.
+/// </summary>
 public static class SliderAssist
 {
+    /// <summary>
+    /// Determines whether the active slider track is hidden.
+    /// </summary>
     public static readonly DependencyProperty HideActiveTrackProperty
         = DependencyProperty.RegisterAttached(
             "HideActiveTrack",
@@ -16,6 +22,9 @@ public static class SliderAssist
     public static void SetHideActiveTrack(DependencyObject element, bool value)
         => element.SetValue(HideActiveTrackProperty, value);
 
+    /// <summary>
+    /// Determines whether the focus visual is only shown while dragging.
+    /// </summary>
     public static readonly DependencyProperty OnlyShowFocusVisualWhileDraggingProperty
         = DependencyProperty.RegisterAttached(
             "OnlyShowFocusVisualWhileDragging",
@@ -29,6 +38,9 @@ public static class SliderAssist
     public static void SetOnlyShowFocusVisualWhileDragging(RangeBase element, bool value)
         => element.SetValue(OnlyShowFocusVisualWhileDraggingProperty, value);
 
+    /// <summary>
+    /// Defines the format string used for the slider tooltip.
+    /// </summary>
     public static readonly DependencyProperty ToolTipFormatProperty
         = DependencyProperty.RegisterAttached(
             "ToolTipFormat",
@@ -43,6 +55,9 @@ public static class SliderAssist
         => element.SetValue(ToolTipFormatProperty, value);
 
     // Fix for Issue3628
+    /// <summary>
+    /// Determines whether clicking the slider gives it focus.
+    /// </summary>
     public static readonly DependencyProperty FocusSliderOnClickProperty =
             DependencyProperty.RegisterAttached(
                 "FocusSliderOnClick",

@@ -2,6 +2,9 @@ using System.Windows.Media;
 
 namespace MaterialDesignThemes.Wpf;
 
+/// <summary>
+/// Provides attached properties for customizing the appearance and behavior of <see cref="ListBoxItem"/> controls.
+/// </summary>
 public static class ListBoxItemAssist
 {
 

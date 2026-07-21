@@ -1,5 +1,8 @@
 ﻿namespace MaterialDesignThemes.Wpf;
 
+/// <summary>
+/// Provides attached properties for configuring navigation drawer appearance and icons.
+/// </summary>
 public static class NavigationDrawerAssist
 {
     private static readonly CornerRadius DefaultCornerRadius = new CornerRadius(2.0);
@@ -17,6 +20,9 @@ public static class NavigationDrawerAssist
     #endregion
 
     #region UnselectedIcon
+    /// <summary>
+    /// Defines the icon displayed when the item is not selected.
+    /// </summary>
     public static PackIconKind GetUnselectedIcon(DependencyObject element)
         => (PackIconKind)element.GetValue(UnselectedIconProperty);
     public static void SetUnselectedIcon(DependencyObject element, PackIconKind value)
@@ -27,6 +33,9 @@ public static class NavigationDrawerAssist
     #endregion
 
     #region SelectedIcon
+    /// <summary>
+    /// Defines the icon displayed when the item is selected.
+    /// </summary>
     public static PackIconKind GetSelectedIcon(DependencyObject element)
         => (PackIconKind)element.GetValue(SelectedIconProperty);
     public static void SetSelectedIcon(DependencyObject element, PackIconKind value)
@@ -37,6 +46,9 @@ public static class NavigationDrawerAssist
     #endregion
 
     #region IconSize
+    /// <summary>
+    /// Defines the size of the navigation drawer icons.
+    /// </summary>
     public static int GetIconSize(DependencyObject element)
         => (int)element.GetValue(IconSizeProperty);
     public static void SetIconSize(DependencyObject element, int value)

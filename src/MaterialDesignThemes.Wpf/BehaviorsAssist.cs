@@ -5,13 +5,23 @@ namespace MaterialDesignThemes.Wpf;
 /* This class is a copy of the StylizedBehaviors.cs from the MahApps.Metro repository with very few changes to it:
  * https://github.com/MahApps/MahApps.Metro/blob/6bce9f8733318a7f1f50ff112f834e917e766ae8/src/MahApps.Metro/Behaviors/StylizedBehaviors.cs
  */
+
+/// <summary>
+/// Provides attached properties for applying and managing reusable behaviors on framework elements.
+/// </summary>
 public static class BehaviorsAssist
 {
+    /// <summary>
+    /// Stores the original behavior instance associated with a cloned behavior.
+    /// </summary>
     private static readonly DependencyProperty OriginalBehaviorProperty = DependencyProperty.RegisterAttached(
         "OriginalBehavior", typeof(Behavior), typeof(BehaviorsAssist), new UIPropertyMetadata(null));
     private static void SetOriginalBehavior(DependencyObject obj, Behavior? value) => obj.SetValue(OriginalBehaviorProperty, value);
     private static Behavior? GetOriginalBehavior(DependencyObject obj) => (Behavior?)obj.GetValue(OriginalBehaviorProperty);
 
+    /// <summary>
+    /// Defines a collection of behaviors to attach to a framework element.
+    /// </summary>
     public static readonly DependencyProperty BehaviorsProperty = DependencyProperty.RegisterAttached(
         "Behaviors", typeof(BehaviorCollection), typeof(BehaviorsAssist), new FrameworkPropertyMetadata(null, OnPropertyChanged));
     public static void SetBehaviors(DependencyObject uie, BehaviorCollection? value) => uie.SetValue(BehaviorsProperty, value);

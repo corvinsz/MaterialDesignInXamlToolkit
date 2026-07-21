@@ -1,11 +1,14 @@
 namespace MaterialDesignThemes.Wpf;
 
+/// <summary>
+/// Provides attached properties for extending TextBlock functionality.
+/// </summary>
 public static class TextBlockAssist
 {
     #region Property AutoToolTip
 
     /// <summary>
-    /// Automatic ToolTip for TextBlock or TextBoxBase if containing text is trimmed
+    /// Enables an automatic ToolTip when the TextBlock text is trimmed.
     /// </summary>
     public static readonly DependencyProperty AutoToolTipProperty = DependencyProperty.RegisterAttached(
         "AutoToolTip", typeof(bool), typeof(TextBlockAssist), new PropertyMetadata(false, OnAutoToolTipChanged));

@@ -2,12 +2,15 @@
 
 namespace MaterialDesignThemes.Wpf;
 
+/// <summary>
+/// Provides attached properties for customizing validation appearance and behavior.
+/// </summary>
 public static class ValidationAssist
 {
     #region ShowOnFocusProperty
 
     /// <summary>
-    /// The hint property
+    /// Determines whether validation messages are shown only while the control has focus.
     /// </summary>
     public static readonly DependencyProperty OnlyShowOnFocusProperty = DependencyProperty.RegisterAttached(
         "OnlyShowOnFocus",
@@ -30,7 +33,7 @@ public static class ValidationAssist
     #region UsePopupProperty
 
     /// <summary>
-    /// The hint property
+    /// Determines whether validation messages are displayed in a popup.
     /// </summary>
     public static readonly DependencyProperty UsePopupProperty = DependencyProperty.RegisterAttached(
         "UsePopup",
@@ -51,7 +54,7 @@ public static class ValidationAssist
     #endregion
 
     /// <summary>
-    /// The hint property
+    /// Specifies the placement of the validation popup.
     /// </summary>
     public static readonly DependencyProperty PopupPlacementProperty = DependencyProperty.RegisterAttached(
         "PopupPlacement",
@@ -70,7 +73,7 @@ public static class ValidationAssist
     }
 
     /// <summary>
-    /// Framework use only.
+    /// Indicates whether validation visuals are suppressed.
     /// </summary>
     public static readonly DependencyProperty SuppressProperty = DependencyProperty.RegisterAttached(
         "Suppress", typeof(bool), typeof(ValidationAssist), new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.Inherits));
@@ -93,6 +96,9 @@ public static class ValidationAssist
         return (bool)element.GetValue(SuppressProperty);
     }
 
+    /// <summary>
+    /// Sets the background brush for validation content.
+    /// </summary>
     public static readonly DependencyProperty BackgroundProperty = DependencyProperty.RegisterAttached(
         "Background", typeof(Brush), typeof(ValidationAssist), new PropertyMetadata(default(Brush)));
 
@@ -108,6 +114,9 @@ public static class ValidationAssist
 
 
 
+    /// <summary>
+    /// Sets the font size used for validation content.
+    /// </summary>
     public static readonly DependencyProperty FontSizeProperty = DependencyProperty.RegisterAttached("FontSize", typeof(double), typeof(ValidationAssist), new PropertyMetadata(10.0));
 
     public static void SetFontSize(DependencyObject element, double value)
@@ -120,6 +129,9 @@ public static class ValidationAssist
         return (double)element.GetValue(FontSizeProperty);
     }
 
+    /// <summary>
+    /// Indicates whether the control currently has a validation error.
+    /// </summary>
     public static readonly DependencyProperty HasErrorProperty = DependencyProperty.RegisterAttached(
         "HasError",
         typeof(bool),
@@ -136,6 +148,9 @@ public static class ValidationAssist
         return (bool)element.GetValue(HasErrorProperty);
     }
 
+    /// <summary>
+    /// Specifies the horizontal alignment of validation content.
+    /// </summary>
     public static readonly DependencyProperty HorizontalAlignmentProperty = DependencyProperty.RegisterAttached(
         "HorizontalAlignment", typeof(HorizontalAlignment), typeof(ValidationAssist), new PropertyMetadata(HorizontalAlignment.Left));
 

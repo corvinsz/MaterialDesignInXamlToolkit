@@ -2,8 +2,14 @@
 
 namespace MaterialDesignThemes.Wpf;
 
+/// <summary>
+/// Provides attached properties for controlling theme-related behavior and resources.
+/// </summary>
 public static class ThemeAssist
 {
+    /// <summary>
+    /// Gets or sets the brush used as a theme trigger value.
+    /// </summary>
     internal static Brush GetTriggerColor(DependencyObject obj)
     {
         return (Brush)obj.GetValue(TriggerBrushProperty);
@@ -17,6 +23,9 @@ public static class ThemeAssist
     internal static readonly DependencyProperty TriggerBrushProperty =
         DependencyProperty.RegisterAttached("TriggerBrush", typeof(Brush), typeof(ThemeAssist), new PropertyMetadata(null));
 
+    /// <summary>
+    /// Gets or sets the theme applied to the associated element.
+    /// </summary>
     public static BaseTheme GetTheme(DependencyObject obj)
     {
         return (BaseTheme)obj.GetValue(ThemeProperty);
@@ -30,6 +39,9 @@ public static class ThemeAssist
     public static readonly DependencyProperty ThemeProperty =
         DependencyProperty.RegisterAttached("Theme", typeof(BaseTheme), typeof(ThemeAssist), new PropertyMetadata(default(BaseTheme), OnThemeChanged));
 
+    /// <summary>
+    /// Gets or sets the theme resource dictionary source used for theme changes.
+    /// </summary>
     public static void ChangeTheme(ResourceDictionary resourceDictionary, BaseTheme newTheme)
     {
         if (resourceDictionary == null) throw new ArgumentNullException(nameof(resourceDictionary));

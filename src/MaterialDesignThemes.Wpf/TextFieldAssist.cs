@@ -330,6 +330,9 @@ public static class TextFieldAssist
     public static VerticalAlignment GetIconVerticalAlignment(DependencyObject element)
         => (VerticalAlignment)element.GetValue(IconVerticalAlignmentProperty);
 
+    /// <summary>
+    /// Gets or sets the style applied to the character counter.
+    /// </summary>
     public static Style GetCharacterCounterStyle(DependencyObject obj) => (Style)obj.GetValue(CharacterCounterStyleProperty);
 
     public static void SetCharacterCounterStyle(DependencyObject obj, Style value) => obj.SetValue(CharacterCounterStyleProperty, value);
@@ -337,6 +340,9 @@ public static class TextFieldAssist
     public static readonly DependencyProperty CharacterCounterStyleProperty =
         DependencyProperty.RegisterAttached("CharacterCounterStyle", typeof(Style), typeof(TextFieldAssist), new PropertyMetadata(null));
 
+    /// <summary>
+    /// Gets or sets the visibility of the character counter.
+    /// </summary>
     public static Visibility GetCharacterCounterVisibility(DependencyObject obj)
         => (Visibility)obj.GetValue(CharacterCounterVisibilityProperty);
 

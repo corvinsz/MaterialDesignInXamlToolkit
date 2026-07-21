@@ -1,7 +1,13 @@
 ﻿namespace MaterialDesignThemes.Wpf;
 
+/// <summary>
+/// Provides attached properties for configuring scrollbar appearance.
+/// </summary>
 public static class ScrollBarAssist
 {
+    /// <summary>
+    /// Controls the visibility of scrollbar buttons.
+    /// </summary>
     public static readonly DependencyProperty ButtonsVisibilityProperty =
         DependencyProperty.RegisterAttached("ButtonsVisibility", typeof(Visibility), typeof(ScrollBarAssist), new PropertyMetadata(Visibility.Visible));
 
@@ -15,6 +21,9 @@ public static class ScrollBarAssist
         return (Visibility)element.GetValue(ButtonsVisibilityProperty);
     }
 
+    /// <summary>
+    /// Defines the corner radius of the scrollbar thumb.
+    /// </summary>
     public static readonly DependencyProperty ThumbCornerRadiusProperty = DependencyProperty.RegisterAttached(
         "ThumbCornerRadius", typeof(CornerRadius), typeof(ScrollBarAssist), new PropertyMetadata(default(CornerRadius)));
 
@@ -28,6 +37,9 @@ public static class ScrollBarAssist
         return (CornerRadius)element.GetValue(ThumbCornerRadiusProperty);
     }
 
+    /// <summary>
+    /// Defines the width of the scrollbar thumb.
+    /// </summary>
     public static readonly DependencyProperty ThumbWidthProperty = DependencyProperty.RegisterAttached(
         "ThumbWidth", typeof(double), typeof(ScrollBarAssist), new PropertyMetadata(double.NaN));
 
@@ -41,6 +53,9 @@ public static class ScrollBarAssist
         return (double)element.GetValue(ThumbWidthProperty);
     }
 
+    /// <summary>
+    /// Defines the height of the scrollbar thumb.
+    /// </summary>
     public static readonly DependencyProperty ThumbHeightProperty = DependencyProperty.RegisterAttached(
         "ThumbHeight", typeof(double), typeof(ScrollBarAssist), new PropertyMetadata(double.NaN));
 

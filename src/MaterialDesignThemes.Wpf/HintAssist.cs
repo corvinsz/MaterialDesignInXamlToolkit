@@ -2,6 +2,9 @@
 
 namespace MaterialDesignThemes.Wpf;
 
+/// <summary>
+/// Provides attached properties for configuring hint, floating hint, and helper text behavior.
+/// </summary>
 public static class HintAssist
 {
     private const double DefaultFloatingScale = 0.74;
@@ -11,6 +14,9 @@ public static class HintAssist
     private static readonly double DefaultHelperTextFontSize = 10;
 
     #region AttachedProperty : IsFloatingProperty
+    /// <summary>
+    /// Defines whether the hint is displayed in floating mode.
+    /// </summary>
     public static readonly DependencyProperty IsFloatingProperty
         = DependencyProperty.RegisterAttached("IsFloating", typeof(bool), typeof(HintAssist),
             new FrameworkPropertyMetadata(default(bool), FrameworkPropertyMetadataOptions.Inherits));
@@ -22,6 +28,9 @@ public static class HintAssist
     #endregion
 
     #region AttachedProperty : FloatingScaleProperty
+    /// <summary>
+    /// Defines the scale applied to floating hints.
+    /// </summary>
     public static readonly DependencyProperty FloatingScaleProperty
         = DependencyProperty.RegisterAttached("FloatingScale", typeof(double), typeof(HintAssist),
             new FrameworkPropertyMetadata(DefaultFloatingScale, FrameworkPropertyMetadataOptions.Inherits));
@@ -33,6 +42,9 @@ public static class HintAssist
     #endregion
 
     #region AttachedProperty : FloatingOffsetProperty
+    /// <summary>
+    /// Defines the offset applied to floating hints.
+    /// </summary>
     public static readonly DependencyProperty FloatingOffsetProperty
         = DependencyProperty.RegisterAttached("FloatingOffset", typeof(Point), typeof(HintAssist),
             new FrameworkPropertyMetadata(DefaultFloatingOffset, FrameworkPropertyMetadataOptions.Inherits));
@@ -45,6 +57,9 @@ public static class HintAssist
     #endregion
 
     #region AttachedProperty : HintProperty
+    /// <summary>
+    /// Defines the hint content displayed by the element.
+    /// </summary>
     public static readonly DependencyProperty HintProperty
         = DependencyProperty.RegisterAttached("Hint", typeof(object), typeof(HintAssist),
             new FrameworkPropertyMetadata(default, FrameworkPropertyMetadataOptions.Inherits));
@@ -56,6 +71,9 @@ public static class HintAssist
     #endregion
 
     #region AttachedProperty : HintOpacityProperty
+    /// <summary>
+    /// Defines the opacity of the hint.
+    /// </summary>
     public static readonly DependencyProperty HintOpacityProperty
         = DependencyProperty.RegisterAttached("HintOpacity", typeof(double), typeof(HintAssist),
             new PropertyMetadata(DefaultHintOpacity));
@@ -67,6 +85,9 @@ public static class HintAssist
     #endregion
 
     #region AttachedProperty : HintHorizontalAlignment
+    /// <summary>
+    /// Defines the horizontal alignment behavior of the hint.
+    /// </summary>
     public static readonly DependencyProperty HintHorizontalAlignmentProperty
         = DependencyProperty.RegisterAttached("HintHorizontalAlignment", typeof(FloatingHintHorizontalAlignment), typeof(HintAssist),
             new FrameworkPropertyMetadata(FloatingHintHorizontalAlignment.Inherit, FrameworkPropertyMetadataOptions.Inherits));
@@ -78,6 +99,9 @@ public static class HintAssist
     #endregion
 
     #region AttachedProperty : FloatingHintHorizontalAlignment
+    /// <summary>
+    /// Defines the horizontal alignment of floating hints.
+    /// </summary>
     public static readonly DependencyProperty FloatingHintHorizontalAlignmentProperty
         = DependencyProperty.RegisterAttached("FloatingHintHorizontalAlignment", typeof(FloatingHintHorizontalAlignment), typeof(HintAssist),
             new FrameworkPropertyMetadata(FloatingHintHorizontalAlignment.Inherit, FrameworkPropertyMetadataOptions.Inherits));
@@ -85,10 +109,13 @@ public static class HintAssist
     public static void SetFloatingHintHorizontalAlignment(DependencyObject element, FloatingHintHorizontalAlignment value)
         => element.SetValue(FloatingHintHorizontalAlignmentProperty, value);
     public static FloatingHintHorizontalAlignment GetFloatingHintHorizontalAlignment(DependencyObject element)
-        => (FloatingHintHorizontalAlignment) element.GetValue(FloatingHintHorizontalAlignmentProperty);
+        => (FloatingHintHorizontalAlignment)element.GetValue(FloatingHintHorizontalAlignmentProperty);
     #endregion
 
     #region AttachedProperty : HintFontFamilyProperty
+    /// <summary>
+    /// Defines the font family used by the hint.
+    /// </summary>
     public static readonly DependencyProperty FontFamilyProperty
         = DependencyProperty.RegisterAttached("FontFamily", typeof(FontFamily), typeof(HintAssist),
             new PropertyMetadata(default));
@@ -100,6 +127,9 @@ public static class HintAssist
     #endregion
 
     #region AttachedProperty : ForegroundProperty
+    /// <summary>
+    /// Defines the foreground brush used by the hint.
+    /// </summary>
     public static readonly DependencyProperty ForegroundProperty
         = DependencyProperty.RegisterAttached("Foreground", typeof(Brush), typeof(HintAssist), new PropertyMetadata(default(Brush)));
 
@@ -110,6 +140,9 @@ public static class HintAssist
     #endregion
 
     #region AttachedProperty : BackgroundProperty
+    /// <summary>
+    /// Defines the background brush used by the hint.
+    /// </summary>
     public static readonly DependencyProperty BackgroundProperty
         = DependencyProperty.RegisterAttached("Background", typeof(Brush), typeof(HintAssist), new PropertyMetadata(DefaultBackground));
 
@@ -120,6 +153,9 @@ public static class HintAssist
     #endregion
 
     #region AttachedProperty: HintPaddingBrush
+    /// <summary>
+    /// Defines the brush used for hint padding.
+    /// </summary>
     public static readonly DependencyProperty HintPaddingBrushProperty =
         DependencyProperty.RegisterAttached("HintPaddingBrush", typeof(Brush), typeof(HintAssist), new PropertyMetadata(null));
 
@@ -131,6 +167,9 @@ public static class HintAssist
     #endregion
 
     #region AttachedProperty: ApplyHintPaddingBrush
+    /// <summary>
+    /// Defines whether the hint padding brush is applied.
+    /// </summary>
     public static readonly DependencyProperty ApplyHintPaddingBrushProperty =
         DependencyProperty.RegisterAttached("ApplyHintPaddingBrush", typeof(bool), typeof(HintAssist), new PropertyMetadata(false));
 
@@ -142,6 +181,9 @@ public static class HintAssist
     #endregion
 
     #region AttachedProperty : HelperTextProperty
+    /// <summary>
+    /// Defines the helper text displayed by the element.
+    /// </summary>
     public static readonly DependencyProperty HelperTextProperty
         = DependencyProperty.RegisterAttached("HelperText", typeof(string), typeof(HintAssist),
             new FrameworkPropertyMetadata(default(string), FrameworkPropertyMetadataOptions.Inherits));
@@ -153,6 +195,9 @@ public static class HintAssist
     #endregion
 
     #region AttachedProperty : HelperTextFontSizeProperty
+    /// <summary>
+    /// Defines the font size of helper text.
+    /// </summary>
     public static readonly DependencyProperty HelperTextFontSizeProperty
         = DependencyProperty.RegisterAttached("HelperTextFontSize", typeof(double), typeof(HintAssist),
             new FrameworkPropertyMetadata(DefaultHelperTextFontSize, FrameworkPropertyMetadataOptions.Inherits));
@@ -165,6 +210,9 @@ public static class HintAssist
     #endregion
 
     #region AttachedProperty : HelperTextStyleProperty
+    /// <summary>
+    /// Defines the style applied to helper text.
+    /// </summary>
     public static readonly DependencyProperty HelperTextStyleProperty
         = DependencyProperty.RegisterAttached("HelperTextStyle", typeof(Style), typeof(HintAssist),
             new PropertyMetadata(null));

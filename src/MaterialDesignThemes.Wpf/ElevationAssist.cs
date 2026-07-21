@@ -49,9 +49,14 @@ internal static class ElevationInfo
     public static DropShadowEffect? GetDropShadow(Elevation elevation) => ShadowsDictionary[elevation];
 }
 
+/// <summary>
+/// Provides attached properties for controlling element elevation and shadows.
+/// </summary>
 public static class ElevationAssist
 {
-
+    /// <summary>
+    /// Defines the elevation level applied to an element.
+    /// </summary>
     public static readonly DependencyProperty ElevationProperty = DependencyProperty.RegisterAttached(
         "Elevation",
         typeof(Elevation),

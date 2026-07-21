@@ -2,6 +2,9 @@
 
 namespace MaterialDesignThemes.Wpf;
 
+/// <summary>
+/// Provides attached properties for configuring ListBox selection behavior.
+/// </summary>
 public static class ListBoxAssist
 {
     static ListBoxAssist()
@@ -47,6 +50,9 @@ public static class ListBoxAssist
         }
     }
 
+    /// <summary>
+    /// Defines whether the ListBox supports toggling item selection.
+    /// </summary>
     public static readonly DependencyProperty IsToggleProperty = DependencyProperty.RegisterAttached(
         "IsToggle", typeof(bool), typeof(ListBoxAssist), new FrameworkPropertyMetadata(default(bool)));
 
@@ -56,6 +62,9 @@ public static class ListBoxAssist
     public static bool GetIsToggle(DependencyObject element)
         => (bool)element.GetValue(IsToggleProperty);
 
+    /// <summary>
+    /// Defines whether users can toggle the currently selected item.
+    /// </summary>
     public static readonly DependencyProperty CanUserToggleSelectedItemProperty = DependencyProperty.RegisterAttached(
         "CanUserToggleSelectedItem", typeof(bool), typeof(ListBoxAssist), new FrameworkPropertyMetadata(default(bool)));
 

@@ -1,5 +1,8 @@
 namespace MaterialDesignThemes.Wpf;
 
+/// <summary>
+/// Provides attached properties for configuring navigation rail appearance, content, and selection behavior.
+/// </summary>
 public static class NavigationRailAssist
 {
     private static readonly CornerRadius DefaultCornerRadius = new(2.0);
@@ -19,7 +22,7 @@ public static class NavigationRailAssist
     #region Property FloatingContent
 
     /// <summary>
-    /// Floating Content (ex: Button) on navigation rail (optional)
+    /// Defines optional floating content displayed on the navigation rail.
     /// </summary>
     public static readonly DependencyProperty FloatingContentProperty = DependencyProperty.RegisterAttached(
         "FloatingContent", typeof(object), typeof(NavigationRailAssist), new PropertyMetadata(null));
@@ -30,6 +33,9 @@ public static class NavigationRailAssist
     #endregion
 
     #region Property AdditionalEndContent
+    /// <summary>
+    /// Defines additional content displayed at the end of the navigation rail.
+    /// </summary>
     public static readonly DependencyProperty AdditionalEndContentProperty = DependencyProperty.RegisterAttached(
         "AdditionalEndContent", typeof(object), typeof(NavigationRailAssist), new PropertyMetadata(null));
     public static object GetAdditionalEndContent(DependencyObject obj) => (object)obj.GetValue(AdditionalEndContentProperty);
@@ -38,6 +44,9 @@ public static class NavigationRailAssist
 
     #region Property ShowSelectionBackground
 
+    /// <summary>
+    /// Determines whether the selection background is displayed.
+    /// </summary>
     public static readonly DependencyProperty ShowSelectionBackgroundProperty = DependencyProperty.RegisterAttached(
         "ShowSelectionBackground", typeof(bool), typeof(NavigationRailAssist), new PropertyMetadata(false));
 
@@ -48,6 +57,9 @@ public static class NavigationRailAssist
 
     #region Property SelectionCornerRadius
 
+    /// <summary>
+    /// Defines the corner radius of the selection indicator.
+    /// </summary>
     public static readonly DependencyProperty SelectionCornerRadiusProperty = DependencyProperty.RegisterAttached(
         "SelectionCornerRadius", typeof(CornerRadius), typeof(NavigationRailAssist), new PropertyMetadata(default(CornerRadius)));
 
@@ -57,6 +69,9 @@ public static class NavigationRailAssist
     #endregion
 
     #region SelectionHeight
+    /// <summary>
+    /// Defines the height of the selection indicator.
+    /// </summary>
     public static int GetSelectionHeight(DependencyObject element)
         => (int)element.GetValue(SelectionHeightProperty);
     public static void SetSelectionHeight(DependencyObject element, int value)
@@ -67,6 +82,9 @@ public static class NavigationRailAssist
     #endregion
 
     #region SelectionWidth
+    /// <summary>
+    /// Defines the width of the selection indicator.
+    /// </summary>
     public static int GetSelectionWidth(DependencyObject element)
         => (int)element.GetValue(SelectionWidthProperty);
     public static void SetSelectionWidth(DependencyObject element, int value)
@@ -77,6 +95,9 @@ public static class NavigationRailAssist
     #endregion
 
     #region UnselectedIcon
+    /// <summary>
+    /// Defines the icon displayed when the item is not selected.
+    /// </summary>
     public static PackIconKind GetUnselectedIcon(DependencyObject element)
         => (PackIconKind)element.GetValue(UnselectedIconProperty);
     public static void SetUnselectedIcon(DependencyObject element, PackIconKind value)
@@ -87,6 +108,9 @@ public static class NavigationRailAssist
     #endregion
 
     #region SelectedIcon
+    /// <summary>
+    /// Defines the icon displayed when the item is selected.
+    /// </summary>
     public static PackIconKind GetSelectedIcon(DependencyObject element)
         => (PackIconKind)element.GetValue(SelectedIconProperty);
     public static void SetSelectedIcon(DependencyObject element, PackIconKind value)
@@ -97,6 +121,9 @@ public static class NavigationRailAssist
     #endregion
 
     #region IconSize
+    /// <summary>
+    /// Defines the size of navigation rail icons.
+    /// </summary>
     public static int GetIconSize(DependencyObject element)
         => (int)element.GetValue(IconSizeProperty);
     public static void SetIconSize(DependencyObject element, int value)
@@ -107,6 +134,9 @@ public static class NavigationRailAssist
     #endregion
 
     #region IsTextVisible
+    /// <summary>
+    /// Determines whether navigation rail text is visible.
+    /// </summary>
     public static bool GetIsTextVisible(DependencyObject element)
         => (bool)element.GetValue(IsTextVisibleProperty);
     public static void SetIsTextVisible(DependencyObject element, bool value)
