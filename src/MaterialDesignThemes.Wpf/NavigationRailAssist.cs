@@ -72,77 +72,71 @@ public static class NavigationRailAssist
     /// <summary>
     /// Defines the height of the selection indicator.
     /// </summary>
+    public static readonly DependencyProperty SelectionHeightProperty =
+        DependencyProperty.RegisterAttached("SelectionHeight", typeof(int), typeof(NavigationRailAssist), new PropertyMetadata(default(int)));
     public static int GetSelectionHeight(DependencyObject element)
         => (int)element.GetValue(SelectionHeightProperty);
     public static void SetSelectionHeight(DependencyObject element, int value)
         => element.SetValue(SelectionHeightProperty, value);
-
-    public static readonly DependencyProperty SelectionHeightProperty =
-        DependencyProperty.RegisterAttached("SelectionHeight", typeof(int), typeof(NavigationRailAssist), new PropertyMetadata(default(int)));
     #endregion
 
     #region SelectionWidth
     /// <summary>
     /// Defines the width of the selection indicator.
     /// </summary>
+    public static readonly DependencyProperty SelectionWidthProperty =
+        DependencyProperty.RegisterAttached("SelectionWidth", typeof(int), typeof(NavigationRailAssist), new PropertyMetadata(default(int)));
     public static int GetSelectionWidth(DependencyObject element)
         => (int)element.GetValue(SelectionWidthProperty);
     public static void SetSelectionWidth(DependencyObject element, int value)
         => element.SetValue(SelectionWidthProperty, value);
-
-    public static readonly DependencyProperty SelectionWidthProperty =
-        DependencyProperty.RegisterAttached("SelectionWidth", typeof(int), typeof(NavigationRailAssist), new PropertyMetadata(default(int)));
     #endregion
 
     #region UnselectedIcon
     /// <summary>
     /// Defines the icon displayed when the item is not selected.
     /// </summary>
+    public static readonly DependencyProperty UnselectedIconProperty =
+        DependencyProperty.RegisterAttached("UnselectedIcon", typeof(PackIconKind), typeof(NavigationRailAssist), new PropertyMetadata(PackIconKind.None));
     public static PackIconKind GetUnselectedIcon(DependencyObject element)
         => (PackIconKind)element.GetValue(UnselectedIconProperty);
     public static void SetUnselectedIcon(DependencyObject element, PackIconKind value)
         => element.SetValue(UnselectedIconProperty, value);
-
-    public static readonly DependencyProperty UnselectedIconProperty =
-        DependencyProperty.RegisterAttached("UnselectedIcon", typeof(PackIconKind), typeof(NavigationRailAssist), new PropertyMetadata(PackIconKind.None));
     #endregion
 
     #region SelectedIcon
     /// <summary>
     /// Defines the icon displayed when the item is selected.
     /// </summary>
+    public static readonly DependencyProperty SelectedIconProperty =
+        DependencyProperty.RegisterAttached("SelectedIcon", typeof(PackIconKind), typeof(NavigationRailAssist), new PropertyMetadata(PackIconKind.None));
     public static PackIconKind GetSelectedIcon(DependencyObject element)
         => (PackIconKind)element.GetValue(SelectedIconProperty);
     public static void SetSelectedIcon(DependencyObject element, PackIconKind value)
         => element.SetValue(SelectedIconProperty, value);
-
-    public static readonly DependencyProperty SelectedIconProperty =
-        DependencyProperty.RegisterAttached("SelectedIcon", typeof(PackIconKind), typeof(NavigationRailAssist), new PropertyMetadata(PackIconKind.None));
     #endregion
 
     #region IconSize
     /// <summary>
     /// Defines the size of navigation rail icons.
     /// </summary>
+    public static readonly DependencyProperty IconSizeProperty =
+        DependencyProperty.RegisterAttached("IconSize", typeof(int), typeof(NavigationRailAssist), new PropertyMetadata(24));
     public static int GetIconSize(DependencyObject element)
         => (int)element.GetValue(IconSizeProperty);
     public static void SetIconSize(DependencyObject element, int value)
         => element.SetValue(IconSizeProperty, value);
-
-    public static readonly DependencyProperty IconSizeProperty =
-        DependencyProperty.RegisterAttached("IconSize", typeof(int), typeof(NavigationRailAssist), new PropertyMetadata(24));
     #endregion
 
     #region IsTextVisible
     /// <summary>
     /// Determines whether navigation rail text is visible.
     /// </summary>
+    public static readonly DependencyProperty IsTextVisibleProperty =
+        DependencyProperty.RegisterAttached("IsTextVisible", typeof(bool), typeof(NavigationRailAssist), new PropertyMetadata(true));
     public static bool GetIsTextVisible(DependencyObject element)
         => (bool)element.GetValue(IsTextVisibleProperty);
     public static void SetIsTextVisible(DependencyObject element, bool value)
         => element.SetValue(IsTextVisibleProperty, value);
-
-    public static readonly DependencyProperty IsTextVisibleProperty =
-        DependencyProperty.RegisterAttached("IsTextVisible", typeof(bool), typeof(NavigationRailAssist), new PropertyMetadata(true));
     #endregion
 }

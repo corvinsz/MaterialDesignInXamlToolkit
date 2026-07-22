@@ -40,6 +40,9 @@ public static class ComboBoxAssist
     #endregion
 
     #region AttachedProperty : CustomPopupPlacementCallback
+    /// <summary>
+    /// Gets or sets the callback used to calculate custom placement positions for the ComboBox popup.
+    /// </summary>
     public static readonly DependencyProperty CustomPopupPlacementCallbackProperty =
         DependencyProperty.RegisterAttached(
             "CustomPopupPlacementCallback",

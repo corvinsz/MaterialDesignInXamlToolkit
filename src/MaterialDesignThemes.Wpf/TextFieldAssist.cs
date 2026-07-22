@@ -33,6 +33,9 @@ public static class TextFieldAssist
     /// </returns>
     public static Thickness GetTextBoxViewMargin(DependencyObject element) => (Thickness)element.GetValue(TextBoxViewMarginProperty);
 
+    /// <summary>
+    /// Gets or sets the vertical alignment of the text box view within the text field.
+    /// </summary>
     public static readonly DependencyProperty TextBoxViewVerticalAlignmentProperty = DependencyProperty.RegisterAttached(
         "TextBoxViewVerticalAlignment",
         typeof(VerticalAlignment),
@@ -333,25 +336,23 @@ public static class TextFieldAssist
     /// <summary>
     /// Gets or sets the style applied to the character counter.
     /// </summary>
+    public static readonly DependencyProperty CharacterCounterStyleProperty =
+        DependencyProperty.RegisterAttached("CharacterCounterStyle", typeof(Style), typeof(TextFieldAssist), new PropertyMetadata(null));
     public static Style GetCharacterCounterStyle(DependencyObject obj) => (Style)obj.GetValue(CharacterCounterStyleProperty);
 
     public static void SetCharacterCounterStyle(DependencyObject obj, Style value) => obj.SetValue(CharacterCounterStyleProperty, value);
 
-    public static readonly DependencyProperty CharacterCounterStyleProperty =
-        DependencyProperty.RegisterAttached("CharacterCounterStyle", typeof(Style), typeof(TextFieldAssist), new PropertyMetadata(null));
-
     /// <summary>
     /// Gets or sets the visibility of the character counter.
     /// </summary>
+    public static readonly DependencyProperty CharacterCounterVisibilityProperty =
+        DependencyProperty.RegisterAttached("CharacterCounterVisibility", typeof(Visibility), typeof(TextFieldAssist),
+            new PropertyMetadata(Visibility.Collapsed, CharacterCounterVisibilityChanged));
     public static Visibility GetCharacterCounterVisibility(DependencyObject obj)
         => (Visibility)obj.GetValue(CharacterCounterVisibilityProperty);
 
     public static void SetCharacterCounterVisibility(DependencyObject obj, Visibility value)
         => obj.SetValue(CharacterCounterVisibilityProperty, value);
-
-    public static readonly DependencyProperty CharacterCounterVisibilityProperty =
-        DependencyProperty.RegisterAttached("CharacterCounterVisibility", typeof(Visibility), typeof(TextFieldAssist),
-            new PropertyMetadata(Visibility.Collapsed, CharacterCounterVisibilityChanged));
 
     private static void CharacterCounterVisibilityChanged(DependencyObject element, DependencyPropertyChangedEventArgs e)
     {
@@ -379,6 +380,9 @@ public static class TextFieldAssist
     internal static int GetPasswordBoxCharacterCount(DependencyObject element)
         => (int)element.GetValue(PasswordBoxCharacterCountProperty);
 
+    /// <summary>
+    /// Gets or sets the thickness of the outline border when the text field is active.
+    /// </summary>
     public static readonly DependencyProperty OutlinedBorderActiveThicknessProperty = DependencyProperty.RegisterAttached(
         "OutlinedBorderActiveThickness", typeof(Thickness), typeof(TextFieldAssist), new FrameworkPropertyMetadata(Constants.DefaultOutlinedBorderActiveThickness, FrameworkPropertyMetadataOptions.Inherits));
     public static void SetOutlinedBorderActiveThickness(DependencyObject element, Thickness value)
@@ -386,6 +390,9 @@ public static class TextFieldAssist
     public static Thickness GetOutlinedBorderActiveThickness(DependencyObject element)
         => (Thickness)element.GetValue(OutlinedBorderActiveThicknessProperty);
 
+    /// <summary>
+    /// Gets or sets the number of lines in the associated text box.
+    /// </summary>
     public static readonly DependencyProperty TextBoxLineCountProperty = DependencyProperty.RegisterAttached(
         "TextBoxLineCount", typeof(int), typeof(TextFieldAssist), new PropertyMetadata(0));
     public static void SetTextBoxLineCount(DependencyObject element, int value)
@@ -393,6 +400,9 @@ public static class TextFieldAssist
     public static int GetTextBoxLineCount(DependencyObject element)
         => (int)element.GetValue(TextBoxLineCountProperty);
 
+    /// <summary>
+    /// Gets or sets a value indicating whether the associated text box supports multiple lines of text.
+    /// </summary>
     public static readonly DependencyProperty TextBoxIsMultiLineProperty = DependencyProperty.RegisterAttached(
         "TextBoxIsMultiLine", typeof(bool), typeof(TextFieldAssist), new PropertyMetadata(false));
     public static void SetTextBoxIsMultiLine(DependencyObject element, bool value)

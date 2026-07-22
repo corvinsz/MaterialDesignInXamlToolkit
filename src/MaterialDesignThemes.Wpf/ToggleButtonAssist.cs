@@ -12,16 +12,14 @@ public static class ToggleButtonAssist
             "HasOnContent", typeof(bool), typeof(ToggleButtonAssist),
             new PropertyMetadata(false));
 
+    /// <summary>
+    /// Indicates whether on-state content is available.
+    /// </summary>
     public static readonly DependencyProperty HasOnContentProperty = HasOnContentPropertyKey.DependencyProperty;
 
     private static void SetHasOnContent(DependencyObject element, object value)
         => element.SetValue(HasOnContentPropertyKey, value);
 
-    /// <summary>
-    /// Indicates whether on-state content is available.
-    /// </summary>
-    /// <param name="element"></param>
-    /// <returns></returns>
     public static bool GetHasOnContent(DependencyObject element)
         => (bool)element.GetValue(HasOnContentProperty);
 
