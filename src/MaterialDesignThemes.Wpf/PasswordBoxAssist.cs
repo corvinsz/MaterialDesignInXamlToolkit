@@ -57,6 +57,7 @@ public static class PasswordBoxAssist
 
     /// <summary>
     /// Controls whether password binding protection is disabled for reveal styles.
+    /// Used by the "reveal" Style to enforce the wiring-up of the PasswordChanged event handler; needed for the "reveal" TextBox.
     /// </summary>
     internal static readonly DependencyProperty SuppressBindingGuardProperty = DependencyProperty.RegisterAttached(
         "SuppressBindingGuard", typeof(bool), typeof(PasswordBoxAssist), new PropertyMetadata(default(bool)));

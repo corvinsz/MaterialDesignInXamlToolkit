@@ -8,7 +8,6 @@ public static class NavigationBarAssist
     private static readonly CornerRadius DefaultCornerRadius = new CornerRadius(2.0);
 
     #region CornerRadius
-
     /// <summary>
     /// Controls the corner radius of the selection box.
     /// </summary>
@@ -17,10 +16,8 @@ public static class NavigationBarAssist
 
     public static CornerRadius GetCornerRadius(DependencyObject element)
         => (CornerRadius)element.GetValue(CornerRadiusProperty);
-
     public static void SetCornerRadius(DependencyObject element, CornerRadius value)
         => element.SetValue(CornerRadiusProperty, value);
-
     #endregion
 
     #region Property ShowSelectionBackground
@@ -31,12 +28,8 @@ public static class NavigationBarAssist
     public static readonly DependencyProperty ShowSelectionBackgroundProperty = DependencyProperty.RegisterAttached(
         "ShowSelectionBackground", typeof(bool), typeof(NavigationBarAssist), new PropertyMetadata(false));
 
-    public static bool GetShowSelectionBackground(DependencyObject element)
-        => (bool)element.GetValue(ShowSelectionBackgroundProperty);
-
-    public static void SetShowSelectionBackground(DependencyObject element, bool value)
-        => element.SetValue(ShowSelectionBackgroundProperty, value);
-
+    public static object GetShowSelectionBackground(DependencyObject element) => (bool)element.GetValue(ShowSelectionBackgroundProperty);
+    public static void SetShowSelectionBackground(DependencyObject element, bool value) => element.SetValue(ShowSelectionBackgroundProperty, value);
     #endregion
 
     #region Property SelectionCornerRadius
@@ -46,13 +39,8 @@ public static class NavigationBarAssist
     /// </summary>
     public static readonly DependencyProperty SelectionCornerRadiusProperty = DependencyProperty.RegisterAttached(
         "SelectionCornerRadius", typeof(CornerRadius), typeof(NavigationBarAssist), new PropertyMetadata(default(CornerRadius)));
-
-    public static CornerRadius GetSelectionCornerRadius(DependencyObject element)
-        => (CornerRadius)element.GetValue(SelectionCornerRadiusProperty);
-
-    public static void SetSelectionCornerRadius(DependencyObject element, CornerRadius value)
-        => element.SetValue(SelectionCornerRadiusProperty, value);
-
+    public static object GetSelectionCornerRadius(DependencyObject element) => (CornerRadius)element.GetValue(SelectionCornerRadiusProperty);
+    public static void SetSelectionCornerRadius(DependencyObject element, CornerRadius value) => element.SetValue(SelectionCornerRadiusProperty, value);
     #endregion
 
     #region SelectionHeight

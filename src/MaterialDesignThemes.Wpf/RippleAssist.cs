@@ -36,7 +36,7 @@ public static class RippleAssist
         "IsCentered", typeof(bool), typeof(RippleAssist), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.Inherits));
 
     /// <summary>
-    /// Determines whether the ripple originates from the center of the content.
+    /// Sets whether the ripple originates from the center of the content.
     /// </summary>
     /// <param name="element"></param>
     /// <param name="value"></param>

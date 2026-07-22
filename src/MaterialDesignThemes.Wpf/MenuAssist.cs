@@ -16,12 +16,8 @@ public static class MenuAssist
             typeof(double),
             typeof(MenuAssist));
 
-    public static double GetTopLevelMenuItemHeight(DependencyObject element)
-        => (double)element.GetValue(TopLevelMenuItemHeightProperty);
-
-    public static void SetTopLevelMenuItemHeight(DependencyObject element, double value)
-        => element.SetValue(TopLevelMenuItemHeightProperty, value);
-
+    public static double GetTopLevelMenuItemHeight(DependencyObject element) => (double)element.GetValue(TopLevelMenuItemHeightProperty);
+    public static void SetTopLevelMenuItemHeight(DependencyObject element, double value) => element.SetValue(TopLevelMenuItemHeightProperty, value);
     #endregion
 
     #region AttachedProperty : MenuItemsPresenterMargin

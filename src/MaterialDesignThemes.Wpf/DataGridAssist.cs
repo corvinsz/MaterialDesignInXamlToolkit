@@ -240,7 +240,7 @@ public static class DataGridAssist
         => element.SetValue(ApplyMaterialDesignColumnStylesProperty, value);
 
     public static bool GetApplyMaterialDesignColumnStyles(DataGrid element)
-        => (bool)element.GetValue(ApplyMaterialDesignColumnStylesProperty);
+        => (bool) element.GetValue(ApplyMaterialDesignColumnStylesProperty);
 
     private static void ApplyMaterialDesignColumnStylesPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
     {
@@ -248,7 +248,7 @@ public static class DataGridAssist
         dataGrid.Columns.CollectionChanged -= ColumnsCollectionChanged;
         if (Equals(true, e.NewValue))
         {
-            dataGrid.Columns.CollectionChanged += ColumnsCollectionChanged;
+            dataGrid.Columns.CollectionChanged += ColumnsCollectionChanged;    // Auto-generated columns are added later in the chain, thus we subscribe to changes.
             foreach (var column in dataGrid.Columns)
             {
                 ApplyMaterialDesignColumnStyleForColumn(dataGrid, column);

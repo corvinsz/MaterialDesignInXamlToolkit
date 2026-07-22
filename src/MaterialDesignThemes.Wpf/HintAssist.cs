@@ -109,7 +109,7 @@ public static class HintAssist
     public static void SetFloatingHintHorizontalAlignment(DependencyObject element, FloatingHintHorizontalAlignment value)
         => element.SetValue(FloatingHintHorizontalAlignmentProperty, value);
     public static FloatingHintHorizontalAlignment GetFloatingHintHorizontalAlignment(DependencyObject element)
-        => (FloatingHintHorizontalAlignment)element.GetValue(FloatingHintHorizontalAlignmentProperty);
+        => (FloatingHintHorizontalAlignment) element.GetValue(FloatingHintHorizontalAlignmentProperty);
     #endregion
 
     #region AttachedProperty : HintFontFamilyProperty
