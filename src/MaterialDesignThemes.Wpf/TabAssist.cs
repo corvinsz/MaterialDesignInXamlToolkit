@@ -54,14 +54,13 @@ public static class TabAssist
     /// <summary>
     /// Gets or sets custom content displayed in the tab header panel.
     /// </summary>
+    public static readonly DependencyProperty HeaderPanelCustomContentProperty = DependencyProperty.RegisterAttached(
+        "HeaderPanelCustomContent", typeof(object), typeof(TabAssist), new PropertyMetadata(default));
     public static object? GetHeaderPanelCustomContent(DependencyObject obj)
         => (object?)obj.GetValue(HeaderPanelCustomContentProperty);
 
     public static void SetHeaderPanelCustomContent(DependencyObject obj, object? value)
         => obj.SetValue(HeaderPanelCustomContentProperty, value);
-
-    public static readonly DependencyProperty HeaderPanelCustomContentProperty = DependencyProperty.RegisterAttached(
-        "HeaderPanelCustomContent", typeof(object), typeof(TabAssist), new PropertyMetadata(default));
 
     /// <summary>
     /// Gets whether the tab headers are currently overflowing.
