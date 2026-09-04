@@ -5,6 +5,7 @@
              xmlns:domain="clr-namespace:MaterialDesign3Demo.Domain"
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:shared="clr-namespace:MaterialDesignDemo.Shared.Examples.Dialogs;assembly=MaterialDesignDemo.Shared"
              xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              d:DataContext="{d:DesignInstance domain:DialogsViewModel}"
@@ -46,6 +47,7 @@
         <ColumnDefinition Width="320" />
         <ColumnDefinition Width="320" />
         <ColumnDefinition Width="320" />
+        <ColumnDefinition Width="600" />
       </Grid.ColumnDefinitions>
 
       <!--#region SAMPLE 1-->
@@ -324,6 +326,14 @@
           </Border>
         </materialDesign:DialogHost>
       </smtx:XamlDisplay>
+      <!--#endregion-->
+
+      <!--#region SAMPLE 7 - WaitForOpened / WaitForClosed demo-->
+      <StackPanel Grid.Row="0" Grid.Column="5">
+        <TextBlock Text="SAMPLE 6: WaitForOpened / WaitForClosed" />
+        <TextBlock Text="The DialogHost.WaitForOpened() and DialogHost.WaitForClosed() methods can be used to wait until the dialog is fully opened or closed respectively." TextWrapping="Wrap" />
+      </StackPanel>
+      <shared:DialogHostWaitForExample Grid.Row="1" Grid.Column="5" />
       <!--#endregion-->
     </Grid>
   </Grid>
