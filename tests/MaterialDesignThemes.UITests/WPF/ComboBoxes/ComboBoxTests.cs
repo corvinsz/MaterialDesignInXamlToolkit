@@ -299,4 +299,39 @@ public class ComboBoxTests : TestBase
         await Assert.That(popupBackground).IsNotNull();
         await Assert.That(popupBackground).IsEqualTo((Color)ColorConverter.ConvertFromString("#CC336699"));
     }
+
+    [Test]
+    [Description("https://github.com/MaterialDesignInXAML/MaterialDesignInXamlToolkit/issues/4090")]
+    public async Task ComboBox_OpensDropDown_WhenClickingOnPrefixOrSuffixTextBlock()
+    {
+        var comboBox = await LoadXaml<ComboBox>($"""
+            <ComboBox materialDesign:TextFieldAssist.PrefixText="Some prefix"
+                      materialDesign:TextFieldAssist.SuffixText="Some suffix"
+                      SelectedIndex="1">
+                <ComboBoxItem Content="Android" />
+                <ComboBoxItem Content="iOS" />
+                <ComboBoxItem Content="Linux" />
+                <ComboBoxItem Content="Windows" />
+            </ComboBox>
+            """);
+
+        await Assert.That(await comboBox.GetIsDropDownOpen()).IsFalse();
+
+        var prefixTextBlock = await comboBox.GetElement<TextBlock>("PrefixTextBlock");
+        await AssertOpensAndClosesDropDown(prefixTextBlock);
+
+        var suffixTextBlock = await comboBox.GetElement<TextBlock>("SuffixTextBlock");
+        await AssertOpensAndClosesDropDown(suffixTextBlock);
+
+        async Task AssertOpensAndClosesDropDown(IVisualElement<TextBlock> textBlock)
+        {
+            await textBlock.LeftClick();
+            await Task.Delay(50, TestContext.Current!.Execution.CancellationToken);
+            await Assert.That(await comboBox.GetIsDropDownOpen()).IsTrue();
+
+            await textBlock.LeftClick();
+            await Task.Delay(50, TestContext.Current!.Execution.CancellationToken);
+            await Assert.That(await comboBox.GetIsDropDownOpen()).IsFalse();
+        }
+    }
 }
