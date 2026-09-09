@@ -7,7 +7,7 @@
              xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
              mc:Ignorable="d"
              d:DesignHeight="450" d:DesignWidth="800">
-    <smtx:XamlDisplay UniqueKey="dialogs_sample65446545617">
+    <smtx:XamlDisplay UniqueKey="DialogHostWaitForExample">
       <Border MinHeight="160"
               Padding="16"
               BorderBrush="{DynamicResource PrimaryHueMidBrush}"
@@ -29,11 +29,10 @@
                         Style="{StaticResource MaterialDesignFlatButton}" />
               </StackPanel>
             </materialDesign:DialogHost.DialogContent>
-            <Button Width="160"
-                    Height="40"
-                    Click="Sample7_OpenButton_Click"
+            <Button Click="Sample7_OpenButton_Click"
                     Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
                     Content="Open Dialog"
+                    HorizontalAlignment="Center"
                     Style="{StaticResource MaterialDesignRaisedButton}" />
           </materialDesign:DialogHost>
 
