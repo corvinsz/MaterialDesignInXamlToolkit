@@ -350,6 +350,7 @@
                          Grid.Column="1"
                          Margin="0,0,2,0"
                          FontSize="{TemplateBinding FontSize}"
+                         IsHitTestVisible="False"
                          Opacity="{TemplateBinding wpf:HintAssist.HintOpacity}"
                          Text="{TemplateBinding wpf:TextFieldAssist.PrefixText}"
                          VerticalAlignment="Center">
@@ -446,6 +447,7 @@
                          Grid.Column="3"
                          Margin="2,0,0,0"
                          FontSize="{TemplateBinding FontSize}"
+                         IsHitTestVisible="False"
                          Opacity="{TemplateBinding wpf:HintAssist.HintOpacity}"
                          Text="{TemplateBinding wpf:TextFieldAssist.SuffixText}"
                          VerticalAlignment="Center">
