@@ -1,0 +1,3 @@
+﻿namespace MaterialDesignDemo.Shared;
+
+public interface IMaterialDesignDemoSharedAssemblyMarker;

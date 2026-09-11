@@ -6,6 +6,7 @@
              xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
+             xmlns:shared="clr-namespace:MaterialDesignDemo.Shared.Examples.Dialogs;assembly=MaterialDesignDemo.Shared"
              xmlns:system="clr-namespace:System;assembly=mscorlib"
              d:DataContext="{d:DesignInstance domain:DialogsViewModel}"
              d:DesignHeight="1080"
@@ -367,6 +368,17 @@
         </Border>
       </materialDesign:DialogHost>
     </smtx:XamlDisplay>
+    <!--#endregion-->
+
+    <Rectangle Style="{StaticResource PageSectionSeparator}" />
+
+    <!--#region SAMPLE 7 - WaitForOpened / WaitForClosed demo-->
+    <TextBlock Style="{StaticResource PageSectionTitleTextBlock}" Text="Sample 7 - WaitForOpened / WaitForClosed" />
+
+    <TextBlock Margin="0,0,0,8"
+               Text="The DialogHost.WaitForOpened() and DialogHost.WaitForClosed() methods can be used to wait until the dialog is fully opened or closed respectively."
+               TextWrapping="Wrap" />
+    <shared:DialogHostWaitForExample />
     <!--#endregion-->
   </StackPanel>
 </UserControl>
