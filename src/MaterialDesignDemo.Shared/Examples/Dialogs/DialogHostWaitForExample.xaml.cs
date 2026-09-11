@@ -7,43 +7,43 @@ namespace MaterialDesignDemo.Shared.Examples.Dialogs;
 /// </summary>
 public partial class DialogHostWaitForExample : UserControl
 {
-    private DateTime? _sample7OpenClicked;
-    private DateTime? _sample7CloseClicked;
+    private DateTime? _sampleOpenClicked;
+    private DateTime? _sampleCloseClicked;
 
     public DialogHostWaitForExample()
     {
         InitializeComponent();
     }
 
-    private async void Sample7_OpenButton_Click(object sender, RoutedEventArgs e)
+    private async void Sample_OpenButton_Click(object sender, RoutedEventArgs e)
     {
-        _sample7OpenClicked = DateTime.Now;
-        Sample7_OpenClicked.Text = _sample7OpenClicked.Value.TimeOfDay.ToString(@"hh\:mm\:ss\.fff");
+        _sampleOpenClicked = DateTime.Now;
+        Sample_OpenClicked.Text = _sampleOpenClicked.Value.TimeOfDay.ToString(@"hh\:mm\:ss\.fff");
 
-        await Sample7DialogHost.WaitForOpened();
+        await SampleDialogHost.WaitForOpened();
         var openedFinished = DateTime.Now;
-        Sample7_OpenedFinished.Text = openedFinished.TimeOfDay.ToString(@"hh\:mm\:ss\.fff");
+        Sample_OpenedFinished.Text = openedFinished.TimeOfDay.ToString(@"hh\:mm\:ss\.fff");
 
-        if (_sample7OpenClicked.HasValue)
+        if (_sampleOpenClicked.HasValue)
         {
-            var diff = openedFinished - _sample7OpenClicked.Value;
-            Sample7_OpenTimeDifference.Text = ((long)diff.TotalMilliseconds).ToString() + " ms";
+            var diff = openedFinished - _sampleOpenClicked.Value;
+            Sample_OpenTimeDifference.Text = ((long)diff.TotalMilliseconds).ToString() + " ms";
         }
 
-        await Sample7DialogHost.WaitForClosed();
+        await SampleDialogHost.WaitForClosed();
         var closedFinished = DateTime.Now;
-        Sample7_ClosedFinished.Text = closedFinished.TimeOfDay.ToString(@"hh\:mm\:ss\.fff");
+        Sample_ClosedFinished.Text = closedFinished.TimeOfDay.ToString(@"hh\:mm\:ss\.fff");
 
-        if (_sample7CloseClicked.HasValue)
+        if (_sampleCloseClicked.HasValue)
         {
-            var closeDiff = closedFinished - _sample7CloseClicked.Value;
-            Sample7_CloseTimeDifference.Text = ((long)closeDiff.TotalMilliseconds).ToString() + " ms";
+            var closeDiff = closedFinished - _sampleCloseClicked.Value;
+            Sample_CloseTimeDifference.Text = ((long)closeDiff.TotalMilliseconds).ToString() + " ms";
         }
     }
 
-    private void Sample7_CloseButton_Click(object sender, RoutedEventArgs e)
+    private void Sample_CloseButton_Click(object sender, RoutedEventArgs e)
     {
-        _sample7CloseClicked = DateTime.Now;
-        Sample7_CloseClicked.Text = _sample7CloseClicked.Value.TimeOfDay.ToString(@"hh\:mm\:ss\.fff");
+        _sampleCloseClicked = DateTime.Now;
+        Sample_CloseClicked.Text = _sampleCloseClicked.Value.TimeOfDay.ToString(@"hh\:mm\:ss\.fff");
     }
 }

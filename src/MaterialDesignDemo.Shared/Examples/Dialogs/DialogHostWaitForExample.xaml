@@ -19,18 +19,18 @@
           <ColumnDefinition Width="280" />
         </Grid.ColumnDefinitions>
 
-        <materialDesign:DialogHost x:Name="Sample7DialogHost" Grid.Column="0">
+        <materialDesign:DialogHost x:Name="SampleDialogHost" Grid.Column="0">
           <materialDesign:DialogHost.DialogContent>
             <StackPanel Margin="16">
-              <TextBlock Margin="0,0,0,8" Text="This is sample 7 dialog content." />
-              <Button Click="Sample7_CloseButton_Click"
+              <TextBlock Margin="0,0,0,8" Text="This is sample dialog content." />
+              <Button Click="Sample_CloseButton_Click"
                       Command="{x:Static materialDesign:DialogHost.CloseDialogCommand}"
                       Content="Close Dialog"
                       Style="{StaticResource MaterialDesignFlatButton}" />
             </StackPanel>
           </materialDesign:DialogHost.DialogContent>
           <Button HorizontalAlignment="Center"
-                  Click="Sample7_OpenButton_Click"
+                  Click="Sample_OpenButton_Click"
                   Command="{x:Static materialDesign:DialogHost.OpenDialogCommand}"
                   Content="Open Dialog"
                   Style="{StaticResource MaterialDesignRaisedButton}" />
@@ -43,7 +43,7 @@
             <StackPanel>
               <WrapPanel>
                 <TextBlock Text="Open button clicked: " />
-                <TextBlock x:Name="Sample7_OpenClicked" />
+                <TextBlock x:Name="Sample_OpenClicked" />
               </WrapPanel>
 
               <materialDesign:Chip HorizontalAlignment="Right" Foreground="Green">
@@ -53,13 +53,13 @@
                       <RotateTransform Angle="-45" />
                     </materialDesign:PackIcon.RenderTransform>
                   </materialDesign:PackIcon>
-                  <TextBlock x:Name="Sample7_OpenTimeDifference" />
+                  <TextBlock x:Name="Sample_OpenTimeDifference" />
                 </WrapPanel>
               </materialDesign:Chip>
 
               <WrapPanel>
                 <TextBlock Text="Opened animation finished: " />
-                <TextBlock x:Name="Sample7_OpenedFinished" />
+                <TextBlock x:Name="Sample_OpenedFinished" />
               </WrapPanel>
             </StackPanel>
           </materialDesign:Card>
@@ -71,23 +71,23 @@
             <StackPanel>
               <WrapPanel>
                 <TextBlock Text="Closed button clicked: " />
-                <TextBlock x:Name="Sample7_CloseClicked" />
+                <TextBlock x:Name="Sample_CloseClicked" />
               </WrapPanel>
 
-              <materialDesign:Chip HorizontalAlignment="Right" Foreground="Red">
+              <materialDesign:Chip HorizontalAlignment="Right" Foreground="{DynamicResource MaterialDesign.Brush.ValidationError}">
                 <WrapPanel VerticalAlignment="Center">
                   <materialDesign:PackIcon Kind="ArrowLeftBottom" RenderTransformOrigin="0.5 0.5">
                     <materialDesign:PackIcon.RenderTransform>
                       <RotateTransform Angle="-45" />
                     </materialDesign:PackIcon.RenderTransform>
                   </materialDesign:PackIcon>
-                  <TextBlock x:Name="Sample7_CloseTimeDifference" />
+                  <TextBlock x:Name="Sample_CloseTimeDifference" />
                 </WrapPanel>
               </materialDesign:Chip>
 
               <WrapPanel>
                 <TextBlock Text="Closed animation finished: " />
-                <TextBlock x:Name="Sample7_ClosedFinished" />
+                <TextBlock x:Name="Sample_ClosedFinished" />
               </WrapPanel>
             </StackPanel>
           </materialDesign:Card>
