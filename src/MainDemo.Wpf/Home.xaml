@@ -54,6 +54,18 @@
             <TextBlock Margin="8,0,0,0" Text="EXPLORE (Ctrl+K)" />
           </StackPanel>
         </Button>
+
+        <materialDesign:ColorPicker ShowAlphaSlider="{Binding ElementName=cbShowAlphaSlider, Path=IsChecked}"
+                                    ShowInput="{Binding ElementName=cbShowInput, Path=IsChecked}"
+                                    ShowPreview="{Binding ElementName=cbShowPreview, Path=IsChecked}"
+                                    HueSliderPosition="Bottom"
+                                    x:Name="cp"
+                                    Height="280"
+                                    Width="420"/>
+        <CheckBox x:Name="cbShowAlphaSlider" Content="ShowAlphaSlider" />
+        <CheckBox x:Name="cbShowInput" Content="ShowInput" />
+        <CheckBox x:Name="cbShowPreview" Content="ShowPreview" />
+
       </StackPanel>
     </Grid>
 

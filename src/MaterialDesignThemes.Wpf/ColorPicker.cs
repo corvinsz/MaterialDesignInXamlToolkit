@@ -1,14 +1,18 @@
-﻿using System.Windows.Media;
+﻿using System;
+using System.Windows.Media;
 using MaterialDesignColors.ColorManipulation;
 
 namespace MaterialDesignThemes.Wpf;
 
 [TemplatePart(Name = HueSliderPartName, Type = typeof(Slider))]
+[TemplatePart(Name = AlphaSliderPartName, Type = typeof(Slider))]
 [TemplatePart(Name = SaturationBrightnessPickerPartName, Type = typeof(Canvas))]
 [TemplatePart(Name = SaturationBrightnessPickerThumbPartName, Type = typeof(Thumb))]
 public class ColorPicker : Control
 {
     public const string HueSliderPartName = "PART_HueSlider";
+    public const string AlphaSliderPartName = "PART_AlphaSlider";
+    public const string InputPartName = "PART_Input";
     public const string SaturationBrightnessPickerPartName = "PART_SaturationBrightnessPicker";
     public const string SaturationBrightnessPickerThumbPartName = "PART_SaturationBrightnessPickerThumb";
 
@@ -20,6 +24,7 @@ public class ColorPicker : Control
     private Thumb? _saturationBrightnessThumb;
     private Canvas? _saturationBrightnessCanvas;
     private Slider? _hueSlider;
+    private TextBox? _input;
 
     public static readonly DependencyProperty ColorProperty = DependencyProperty.Register(nameof(Color), typeof(Color), typeof(ColorPicker),
         new FrameworkPropertyMetadata(default(Color), FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, ColorPropertyChangedCallback));
@@ -37,9 +42,13 @@ public class ColorPicker : Control
         if (!colorPicker._inCallback)
         {
             colorPicker._inCallback = true;
-            colorPicker.SetCurrentValue(HsbProperty, ((Color)e.NewValue).ToHsb());
+            var color = (Color)e.NewValue;
+            colorPicker.SetCurrentValue(HsbProperty, color.ToHsb());
+            colorPicker.SetCurrentValue(AlphaProperty, (double)color.A);
             colorPicker._inCallback = false;
         }
+
+        colorPicker.UpdateInputText();
 
         var args = new RoutedPropertyChangedEventArgs<Color>(
             (Color)e.OldValue,
@@ -85,7 +94,35 @@ public class ColorPicker : Control
         if (e.NewValue is Hsb hsb)
         {
             color = hsb.ToColor();
+            color.A = ToByte(colorPicker.Alpha);
         }
+        colorPicker.SetCurrentValue(ColorProperty, color);
+
+        colorPicker._inCallback = false;
+    }
+
+    public static readonly DependencyProperty AlphaProperty = DependencyProperty.Register(
+        nameof(Alpha), typeof(double), typeof(ColorPicker),
+        new FrameworkPropertyMetadata(255d, FrameworkPropertyMetadataOptions.BindsTwoWayByDefault, AlphaPropertyChangedCallback));
+
+    public double Alpha
+    {
+        get => (double)GetValue(AlphaProperty);
+        set => SetValue(AlphaProperty, value);
+    }
+
+    private static void AlphaPropertyChangedCallback(DependencyObject d, DependencyPropertyChangedEventArgs e)
+    {
+        var colorPicker = (ColorPicker)d;
+        if (colorPicker._inCallback)
+        {
+            return;
+        }
+
+        colorPicker._inCallback = true;
+
+        var color = colorPicker.Hsb.ToColor();
+        color.A = ToByte(e.NewValue);
         colorPicker.SetCurrentValue(ColorProperty, color);
 
         colorPicker._inCallback = false;
@@ -98,6 +135,42 @@ public class ColorPicker : Control
     {
         get => (Dock)GetValue(HueSliderPositionProperty);
         set => SetValue(HueSliderPositionProperty, value);
+    }
+
+    public static readonly DependencyProperty AlphaSliderPositionProperty = DependencyProperty.Register(
+        nameof(AlphaSliderPosition), typeof(Dock), typeof(ColorPicker), new PropertyMetadata(Dock.Bottom));
+
+    public Dock AlphaSliderPosition
+    {
+        get => (Dock)GetValue(AlphaSliderPositionProperty);
+        set => SetValue(AlphaSliderPositionProperty, value);
+    }
+
+    public static readonly DependencyProperty ShowAlphaSliderProperty = DependencyProperty.Register(
+        nameof(ShowAlphaSlider), typeof(bool), typeof(ColorPicker), new PropertyMetadata(true));
+
+    public bool ShowAlphaSlider
+    {
+        get => (bool)GetValue(ShowAlphaSliderProperty);
+        set => SetValue(ShowAlphaSliderProperty, value);
+    }
+
+    public static readonly DependencyProperty ShowPreviewProperty = DependencyProperty.Register(
+        nameof(ShowPreview), typeof(bool), typeof(ColorPicker), new PropertyMetadata(true));
+
+    public bool ShowPreview
+    {
+        get => (bool)GetValue(ShowPreviewProperty);
+        set => SetValue(ShowPreviewProperty, value);
+    }
+
+    public static readonly DependencyProperty ShowInputProperty = DependencyProperty.Register(
+        nameof(ShowInput), typeof(bool), typeof(ColorPicker), new PropertyMetadata(true));
+
+    public bool ShowInput
+    {
+        get => (bool)GetValue(ShowInputProperty);
+        set => SetValue(ShowInputProperty, value);
     }
 
     public override void OnApplyTemplate()
@@ -128,6 +201,17 @@ public class ColorPicker : Control
         if (_hueSlider != null)
         {
             _hueSlider.ValueChanged += HueSliderOnValueChanged;
+        }
+
+        if (_input != null)
+        {
+            _input.LostFocus -= InputOnLostFocus;
+        }
+        _input = GetTemplateChild(InputPartName) as TextBox;
+        if (_input != null)
+        {
+            _input.LostFocus += InputOnLostFocus;
+            UpdateInputText();
         }
 
         base.OnApplyTemplate();
@@ -209,5 +293,57 @@ public class ColorPicker : Control
         if (_saturationBrightnessCanvas is null) return;
         var top = ((1 - Hsb.Brightness) * _saturationBrightnessCanvas.ActualHeight);
         Canvas.SetTop(_saturationBrightnessThumb, top);
+    }
+
+    private void InputOnLostFocus(object sender, RoutedEventArgs e)
+    {
+        if (_input is null)
+        {
+            return;
+        }
+
+        Color oldColor = Color;
+
+        try
+        {
+            object? convertedColor = ColorConverter.ConvertFromString(_input.Text);
+            if (convertedColor is Color converted)
+            {
+                SetCurrentValue(ColorProperty, converted);
+                return;
+            }
+        }
+        catch
+        {
+        }
+
+        _input.Text = oldColor.ToString();
+    }
+
+    private void UpdateInputText()
+    {
+        if (_input is null || _input.IsKeyboardFocusWithin)
+        {
+            return;
+        }
+
+        string colorAsString = Color.ToString();
+        if (!string.Equals(_input.Text, colorAsString, StringComparison.OrdinalIgnoreCase))
+        {
+            _input.Text = colorAsString;
+        }
+    }
+
+    private static byte ToByte(object? value)
+    {
+        if (value is not double alpha)
+        {
+            return 0;
+        }
+
+        if (alpha < byte.MinValue) alpha = byte.MinValue;
+        if (alpha > byte.MaxValue) alpha = byte.MaxValue;
+
+        return (byte)alpha;
     }
 }

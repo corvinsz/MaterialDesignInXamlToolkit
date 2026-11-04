@@ -274,99 +274,270 @@
     </Style.Triggers>
   </Style>
 
-  <ControlTemplate x:Key="ColorPickerHorizontal" TargetType="{x:Type wpf:ColorPicker}">
-    <DockPanel>
-      <Slider x:Name="PART_HueSlider"
-              Margin="8"
-              DockPanel.Dock="{TemplateBinding HueSliderPosition}"
-              IsMoveToPointEnabled="True"
-              Orientation="Horizontal"
-              Style="{StaticResource MaterialDesignColorSlider}"
-              Value="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
-      <Grid>
-        <Rectangle Fill="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static converters:HsbLinearGradientConverter.Instance}}" />
-        <Rectangle Fill="Black">
-          <Rectangle.OpacityMask>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-              <GradientStop Offset="0" Color="Transparent" />
-              <GradientStop Offset="1.0" Color="Black" />
-            </LinearGradientBrush>
-          </Rectangle.OpacityMask>
-        </Rectangle>
+  <Style x:Key="MaterialDesignAlphaSlider" TargetType="{x:Type Slider}">
+    <Setter Property="Margin" Value="4" />
+    <Setter Property="Minimum" Value="0" />
+    <Setter Property="Maximum" Value="255" />
+    <Setter Property="Orientation" Value="Horizontal" />
+    <Setter Property="IsMoveToPointEnabled" Value="True" />
+    <Setter Property="Visibility" Value="Visible" />
+  </Style>
 
-        <Canvas Name="PART_SaturationBrightnessPicker"
-                Background="Transparent"
-                ClipToBounds="True"
-                Focusable="True">
-          <Thumb Name="PART_SaturationBrightnessPickerThumb"
-                 Canvas.Left="20"
-                 Canvas.Top="20">
-            <Thumb.Template>
-              <ControlTemplate>
-                <Ellipse Width="24"
-                         Height="24"
-                         Margin="-12,-12,0,0"
-                         Fill="Transparent"
-                         Stroke="White"
-                         StrokeThickness="2" />
-              </ControlTemplate>
-            </Thumb.Template>
-          </Thumb>
-        </Canvas>
-      </Grid>
+  <ControlTemplate x:Key="ColorPickerHorizontalTop" TargetType="{x:Type wpf:ColorPicker}">
+    <DockPanel>
+      <Border x:Name="PART_Preview"
+              CornerRadius="8"
+              Width="42"
+              Height="42"
+              Margin="8"
+              VerticalAlignment="Top"
+              DockPanel.Dock="Left"
+              BorderBrush="{DynamicResource MaterialDesign.Brush.Divider}"
+              BorderThickness="1">
+        <Border.Background>
+          <SolidColorBrush Color="{Binding Color, RelativeSource={RelativeSource TemplatedParent}}" />
+        </Border.Background>
+      </Border>
+      <DockPanel>
+        <TextBox x:Name="PART_Input"
+                 Margin="8"
+                 DockPanel.Dock="Bottom"
+                 Text="{Binding Color, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+        <Slider x:Name="PART_HueSlider"
+                Margin="4"
+                DockPanel.Dock="{TemplateBinding HueSliderPosition}"
+                IsMoveToPointEnabled="True"
+                Orientation="Horizontal"
+                Style="{StaticResource MaterialDesignColorSlider}"
+                Value="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+        <Slider x:Name="PART_AlphaSlider"
+                DockPanel.Dock="{TemplateBinding AlphaSliderPosition}"
+                Style="{StaticResource MaterialDesignAlphaSlider}"
+                Value="{Binding Alpha, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+        <Grid>
+          <Rectangle Fill="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static converters:HsbLinearGradientConverter.Instance}}" />
+          <Rectangle Fill="Black">
+            <Rectangle.OpacityMask>
+              <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Offset="0" Color="Transparent" />
+                <GradientStop Offset="1.0" Color="Black" />
+              </LinearGradientBrush>
+            </Rectangle.OpacityMask>
+          </Rectangle>
+
+          <Canvas Name="PART_SaturationBrightnessPicker"
+                  Background="Transparent"
+                  ClipToBounds="True"
+                  Focusable="True">
+            <Thumb Name="PART_SaturationBrightnessPickerThumb"
+                   Canvas.Left="20"
+                   Canvas.Top="20">
+              <Thumb.Template>
+                <ControlTemplate>
+                  <Ellipse Width="24"
+                           Height="24"
+                           Margin="-12,-12,0,0"
+                           Fill="Transparent"
+                           Stroke="White"
+                           StrokeThickness="2" />
+                </ControlTemplate>
+              </Thumb.Template>
+            </Thumb>
+          </Canvas>
+        </Grid>
+      </DockPanel>
     </DockPanel>
+    <ControlTemplate.Triggers>
+      <Trigger Property="AlphaSliderPosition" Value="Left">
+        <Setter TargetName="PART_AlphaSlider" Property="Orientation" Value="Vertical" />
+      </Trigger>
+      <Trigger Property="AlphaSliderPosition" Value="Right">
+        <Setter TargetName="PART_AlphaSlider" Property="Orientation" Value="Vertical" />
+      </Trigger>
+      <Trigger Property="ShowAlphaSlider" Value="False">
+        <Setter TargetName="PART_AlphaSlider" Property="Visibility" Value="Collapsed" />
+      </Trigger>
+      <Trigger Property="ShowPreview" Value="False">
+        <Setter TargetName="PART_Preview" Property="Visibility" Value="Collapsed" />
+      </Trigger>
+      <Trigger Property="ShowInput" Value="False">
+        <Setter TargetName="PART_Input" Property="Visibility" Value="Collapsed" />
+      </Trigger>
+    </ControlTemplate.Triggers>
+  </ControlTemplate>
+
+  <ControlTemplate x:Key="ColorPickerHorizontalBottom" TargetType="{x:Type wpf:ColorPicker}">
+    <DockPanel>
+      <Border x:Name="PART_Preview"
+              CornerRadius="8"
+              Width="42"
+              Height="42"
+              Margin="8"
+              VerticalAlignment="Top"
+              DockPanel.Dock="Left"
+              BorderBrush="{DynamicResource MaterialDesign.Brush.Divider}"
+              BorderThickness="1">
+        <Border.Background>
+          <SolidColorBrush Color="{Binding Color, RelativeSource={RelativeSource TemplatedParent}}" />
+        </Border.Background>
+      </Border>
+      <DockPanel>
+        <TextBox x:Name="PART_Input"
+                 Margin="8"
+                 DockPanel.Dock="Bottom"
+                 Text="{Binding Color, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+        <Slider x:Name="PART_AlphaSlider"
+                DockPanel.Dock="{TemplateBinding AlphaSliderPosition}"
+                Style="{StaticResource MaterialDesignAlphaSlider}"
+                Value="{Binding Alpha, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+        <Slider x:Name="PART_HueSlider"
+                Margin="4"
+                DockPanel.Dock="{TemplateBinding HueSliderPosition}"
+                IsMoveToPointEnabled="True"
+                Orientation="Horizontal"
+                Style="{StaticResource MaterialDesignColorSlider}"
+                Value="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+        <Grid>
+          <Rectangle Fill="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static converters:HsbLinearGradientConverter.Instance}}" />
+          <Rectangle Fill="Black">
+            <Rectangle.OpacityMask>
+              <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Offset="0" Color="Transparent" />
+                <GradientStop Offset="1.0" Color="Black" />
+              </LinearGradientBrush>
+            </Rectangle.OpacityMask>
+          </Rectangle>
+
+          <Canvas Name="PART_SaturationBrightnessPicker"
+                  Background="Transparent"
+                  ClipToBounds="True"
+                  Focusable="True">
+            <Thumb Name="PART_SaturationBrightnessPickerThumb"
+                   Canvas.Left="20"
+                   Canvas.Top="20">
+              <Thumb.Template>
+                <ControlTemplate>
+                  <Ellipse Width="24"
+                           Height="24"
+                           Margin="-12,-12,0,0"
+                           Fill="Transparent"
+                           Stroke="White"
+                           StrokeThickness="2" />
+                </ControlTemplate>
+              </Thumb.Template>
+            </Thumb>
+          </Canvas>
+        </Grid>
+      </DockPanel>
+    </DockPanel>
+    <ControlTemplate.Triggers>
+      <Trigger Property="AlphaSliderPosition" Value="Left">
+        <Setter TargetName="PART_AlphaSlider" Property="Orientation" Value="Vertical" />
+      </Trigger>
+      <Trigger Property="AlphaSliderPosition" Value="Right">
+        <Setter TargetName="PART_AlphaSlider" Property="Orientation" Value="Vertical" />
+      </Trigger>
+      <Trigger Property="ShowAlphaSlider" Value="False">
+        <Setter TargetName="PART_AlphaSlider" Property="Visibility" Value="Collapsed" />
+      </Trigger>
+      <Trigger Property="ShowPreview" Value="False">
+        <Setter TargetName="PART_Preview" Property="Visibility" Value="Collapsed" />
+      </Trigger>
+      <Trigger Property="ShowInput" Value="False">
+        <Setter TargetName="PART_Input" Property="Visibility" Value="Collapsed" />
+      </Trigger>
+    </ControlTemplate.Triggers>
   </ControlTemplate>
 
   <ControlTemplate x:Key="ColorPickerVertical" TargetType="{x:Type wpf:ColorPicker}">
     <DockPanel>
-      <Slider x:Name="PART_HueSlider"
+      <Border x:Name="PART_Preview"
+              Width="42"
+              Height="42"
               Margin="8"
-              DockPanel.Dock="{TemplateBinding HueSliderPosition}"
-              IsMoveToPointEnabled="True"
-              Orientation="Vertical"
-              Style="{StaticResource MaterialDesignColorSlider}"
-              Value="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
-      <Grid>
-        <Rectangle Fill="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static converters:HsbLinearGradientConverter.Instance}}" />
-        <Rectangle Fill="Black">
-          <Rectangle.OpacityMask>
-            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-              <GradientStop Offset="0" Color="Transparent" />
-              <GradientStop Offset="1.0" Color="Black" />
-            </LinearGradientBrush>
-          </Rectangle.OpacityMask>
-        </Rectangle>
+              VerticalAlignment="Top"
+              DockPanel.Dock="Left"
+              BorderBrush="{DynamicResource MaterialDesign.Brush.Divider}"
+              BorderThickness="1">
+        <Border.Background>
+          <SolidColorBrush Color="{Binding Color, RelativeSource={RelativeSource TemplatedParent}}" />
+        </Border.Background>
+      </Border>
+      <DockPanel>
+        <Slider x:Name="PART_HueSlider"
+                Margin="8"
+                DockPanel.Dock="{TemplateBinding HueSliderPosition}"
+                IsMoveToPointEnabled="True"
+                Orientation="Vertical"
+                Style="{StaticResource MaterialDesignColorSlider}"
+                Value="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+        <Slider x:Name="PART_AlphaSlider"
+                DockPanel.Dock="{TemplateBinding AlphaSliderPosition}"
+                Style="{StaticResource MaterialDesignAlphaSlider}"
+                Value="{Binding Alpha, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+        <TextBox x:Name="PART_Input"
+                 Margin="8"
+                 DockPanel.Dock="Bottom"
+                 Text="{Binding Color, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+        <Grid>
+          <Rectangle Fill="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static converters:HsbLinearGradientConverter.Instance}}" />
+          <Rectangle Fill="Black">
+            <Rectangle.OpacityMask>
+              <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                <GradientStop Offset="0" Color="Transparent" />
+                <GradientStop Offset="1.0" Color="Black" />
+              </LinearGradientBrush>
+            </Rectangle.OpacityMask>
+          </Rectangle>
 
-        <Canvas Name="PART_SaturationBrightnessPicker"
-                Background="Transparent"
-                ClipToBounds="True"
-                Focusable="True">
-          <Thumb Name="PART_SaturationBrightnessPickerThumb"
-                 Canvas.Left="20"
-                 Canvas.Top="20">
-            <Thumb.Template>
-              <ControlTemplate>
-                <Ellipse Width="24"
-                         Height="24"
-                         Margin="-12,-12,0,0"
-                         Fill="Transparent"
-                         Stroke="White"
-                         StrokeThickness="2" />
-              </ControlTemplate>
-            </Thumb.Template>
-          </Thumb>
-        </Canvas>
-      </Grid>
+          <Canvas Name="PART_SaturationBrightnessPicker"
+                  Background="Transparent"
+                  ClipToBounds="True"
+                  Focusable="True">
+            <Thumb Name="PART_SaturationBrightnessPickerThumb"
+                   Canvas.Left="20"
+                   Canvas.Top="20">
+              <Thumb.Template>
+                <ControlTemplate>
+                  <Ellipse Width="24"
+                           Height="24"
+                           Margin="-12,-12,0,0"
+                           Fill="Transparent"
+                           Stroke="White"
+                           StrokeThickness="2" />
+                </ControlTemplate>
+              </Thumb.Template>
+            </Thumb>
+          </Canvas>
+        </Grid>
+      </DockPanel>
     </DockPanel>
+    <ControlTemplate.Triggers>
+      <Trigger Property="AlphaSliderPosition" Value="Left">
+        <Setter TargetName="PART_AlphaSlider" Property="Orientation" Value="Vertical" />
+      </Trigger>
+      <Trigger Property="AlphaSliderPosition" Value="Right">
+        <Setter TargetName="PART_AlphaSlider" Property="Orientation" Value="Vertical" />
+      </Trigger>
+      <Trigger Property="ShowAlphaSlider" Value="False">
+        <Setter TargetName="PART_AlphaSlider" Property="Visibility" Value="Collapsed" />
+      </Trigger>
+      <Trigger Property="ShowPreview" Value="False">
+        <Setter TargetName="PART_Preview" Property="Visibility" Value="Collapsed" />
+      </Trigger>
+      <Trigger Property="ShowInput" Value="False">
+        <Setter TargetName="PART_Input" Property="Visibility" Value="Collapsed" />
+      </Trigger>
+    </ControlTemplate.Triggers>
   </ControlTemplate>
 
   <Style TargetType="{x:Type wpf:ColorPicker}">
     <Style.Triggers>
       <Trigger Property="HueSliderPosition" Value="Top">
-        <Setter Property="Template" Value="{StaticResource ColorPickerHorizontal}" />
+        <Setter Property="Template" Value="{StaticResource ColorPickerHorizontalTop}" />
       </Trigger>
       <Trigger Property="HueSliderPosition" Value="Bottom">
-        <Setter Property="Template" Value="{StaticResource ColorPickerHorizontal}" />
+        <Setter Property="Template" Value="{StaticResource ColorPickerHorizontalBottom}" />
       </Trigger>
       <Trigger Property="HueSliderPosition" Value="Left">
         <Setter Property="Template" Value="{StaticResource ColorPickerVertical}" />

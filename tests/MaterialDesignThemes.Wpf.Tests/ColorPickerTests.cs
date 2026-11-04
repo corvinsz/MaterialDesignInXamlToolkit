@@ -18,6 +18,15 @@ public class ColorPickerTests
     public static Slider GetHueSlider(ColorPicker colorPicker)
         => colorPicker.FindVisualChild<Slider>(ColorPicker.HueSliderPartName);
 
+    public static Slider GetAlphaSlider(ColorPicker colorPicker)
+        => colorPicker.FindVisualChild<Slider>(ColorPicker.AlphaSliderPartName);
+
+    public static Border GetPreview(ColorPicker colorPicker)
+        => colorPicker.FindVisualChild<Border>("PART_Preview");
+
+    public static TextBox GetInput(ColorPicker colorPicker)
+        => colorPicker.FindVisualChild<TextBox>(ColorPicker.InputPartName);
+
     public static Canvas GetSaturationBrightnessPicker(ColorPicker colorPicker)
         => colorPicker.FindVisualChild<Canvas>(ColorPicker.SaturationBrightnessPickerPartName);
 
@@ -29,8 +38,19 @@ public class ColorPickerTests
     {
         ColorPicker colorPicker = CreateElement();
         Slider slider = GetHueSlider(colorPicker);
+        Slider alphaSlider = GetAlphaSlider(colorPicker);
         await Assert.That(colorPicker.Color).IsEqualTo(default(Color));
         await Assert.That(slider.Value).IsEqualTo(0);
+        await Assert.That(alphaSlider.Value).IsEqualTo(255);
+        await Assert.That(colorPicker.ShowPreview).IsTrue();
+        await Assert.That(colorPicker.ShowInput).IsTrue();
+
+        Border preview = GetPreview(colorPicker);
+        TextBox input = GetInput(colorPicker);
+        await Assert.That(preview.Width).IsEqualTo(42);
+        await Assert.That(preview.Height).IsEqualTo(42);
+        await Assert.That(input.Text).IsEqualTo(colorPicker.Color.ToString());
+        await Assert.That(input.IsReadOnly).IsFalse();
 
         //Thumb should be in the bottom left corner
         Thumb saturationBrightnessPickerThumb = GetSaturationBrightnessPickerThumb(colorPicker);
@@ -52,6 +72,7 @@ public class ColorPickerTests
     {
         ColorPicker colorPicker = CreateElement();
         Slider hueSlider = GetHueSlider(colorPicker);
+        Slider alphaSlider = GetAlphaSlider(colorPicker);
         Canvas saturationBrightnessPicker = GetSaturationBrightnessPicker(colorPicker);
         Thumb saturationBrightnessPickerThumb = GetSaturationBrightnessPickerThumb(colorPicker);
 
@@ -63,10 +84,54 @@ public class ColorPickerTests
         SetColor(colorPicker, color);
 
         await Assert.That(hueSlider.Value).IsEqualTo(hsb.Hue);
+        await Assert.That(alphaSlider.Value).IsEqualTo(color.A);
         var left = (saturationBrightnessPicker.ActualWidth) * hsb.Saturation;
         var top = ((1 - hsb.Brightness) * saturationBrightnessPicker.ActualHeight);
         await Assert.That(Canvas.GetLeft(saturationBrightnessPickerThumb)).IsEqualTo(left);
         await Assert.That(Canvas.GetTop(saturationBrightnessPickerThumb)).IsEqualTo(top);
+    }
+
+    [Test]
+    public async Task SettingAlphaUpdatesColorAlphaChannel()
+    {
+        ColorPicker colorPicker = CreateElement();
+        SetColor(colorPicker, Colors.Red);
+
+        colorPicker.Alpha = 128;
+
+        await Assert.That(colorPicker.Color.A).IsEqualTo((byte)128);
+    }
+
+    [Test]
+    public async Task InputTextChanged_DoesNotApplyUntilFocusIsLost()
+    {
+        ColorPicker colorPicker = CreateElement();
+        SetColor(colorPicker, Colors.Red);
+        TextBox input = GetInput(colorPicker);
+
+        input.Text = "#FF00FF00";
+
+        await Assert.That(colorPicker.Color).IsEqualTo(Colors.Red);
+
+        input.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
+
+        await Assert.That(colorPicker.Color).IsEqualTo(Colors.Lime);
+        await Assert.That(input.Text).IsEqualTo(Colors.Lime.ToString());
+    }
+
+    [Test]
+    public async Task InvalidInputText_RevertsToPreviousValueOnFocusLost()
+    {
+        ColorPicker colorPicker = CreateElement();
+        SetColor(colorPicker, Colors.Red);
+        TextBox input = GetInput(colorPicker);
+        string previousText = input.Text;
+
+        input.Text = "not-a-color";
+        input.RaiseEvent(new RoutedEventArgs(UIElement.LostFocusEvent));
+
+        await Assert.That(colorPicker.Color).IsEqualTo(Colors.Red);
+        await Assert.That(input.Text).IsEqualTo(previousText);
     }
 
     [Test]
@@ -123,6 +188,62 @@ public class ColorPickerTests
 
         await Assert.That(called).IsTrue();
         await Assert.That(receivedColor).IsEqualTo(Colors.Lime);
+    }
+
+    [Test]
+    [Arguments(Dock.Top)]
+    [Arguments(Dock.Bottom)]
+    [Arguments(Dock.Left)]
+    [Arguments(Dock.Right)]
+    public async Task HueSliderPositionAppliesTemplateWithPreviewInputAndAlpha(Dock hueSliderPosition)
+    {
+        ColorPicker colorPicker = CreateElement();
+        colorPicker.HueSliderPosition = hueSliderPosition;
+        colorPicker.ApplyTemplate();
+        colorPicker.Arrange(new Rect(0, 0, 400, 240));
+
+        Slider hueSlider = GetHueSlider(colorPicker);
+        Slider alphaSlider = GetAlphaSlider(colorPicker);
+        Border preview = GetPreview(colorPicker);
+        TextBox input = GetInput(colorPicker);
+
+        await Assert.That(hueSlider).IsNotNull();
+        await Assert.That(alphaSlider).IsNotNull();
+        await Assert.That(preview).IsNotNull();
+        await Assert.That(input).IsNotNull();
+
+        if (hueSliderPosition is Dock.Left or Dock.Right)
+        {
+            await Assert.That(hueSlider.Orientation).IsEqualTo(Orientation.Vertical);
+        }
+        else
+        {
+            await Assert.That(hueSlider.Orientation).IsEqualTo(Orientation.Horizontal);
+        }
+    }
+
+    [Test]
+    [Arguments(Dock.Top)]
+    [Arguments(Dock.Bottom)]
+    [Arguments(Dock.Left)]
+    [Arguments(Dock.Right)]
+    public async Task ShowPreviewShowInputAndShowAlphaSliderCanHideControlsAcrossHueLayouts(Dock hueSliderPosition)
+    {
+        ColorPicker colorPicker = CreateElement();
+        colorPicker.HueSliderPosition = hueSliderPosition;
+        colorPicker.ShowPreview = false;
+        colorPicker.ShowInput = false;
+        colorPicker.ShowAlphaSlider = false;
+        colorPicker.ApplyTemplate();
+        colorPicker.Arrange(new Rect(0, 0, 400, 240));
+
+        Border preview = GetPreview(colorPicker);
+        TextBox input = GetInput(colorPicker);
+        Slider alphaSlider = GetAlphaSlider(colorPicker);
+
+        await Assert.That(preview.Visibility).IsEqualTo(Visibility.Collapsed);
+        await Assert.That(input.Visibility).IsEqualTo(Visibility.Collapsed);
+        await Assert.That(alphaSlider.Visibility).IsEqualTo(Visibility.Collapsed);
     }
 
     [Test]
