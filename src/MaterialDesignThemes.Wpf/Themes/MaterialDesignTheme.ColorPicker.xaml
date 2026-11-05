@@ -274,86 +274,266 @@
     </Style.Triggers>
   </Style>
 
+  <ControlTemplate x:Key="MaterialDesignAlphaSliderHorizontal" TargetType="{x:Type Slider}">
+    <Border x:Name="border"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            SnapsToDevicePixels="True">
+      <Grid>
+        <Grid.RowDefinitions>
+          <RowDefinition Height="Auto" />
+          <RowDefinition Height="Auto" MinHeight="{TemplateBinding MinHeight}" />
+          <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Border Grid.Row="1"
+                Height="8"
+                CornerRadius="4">
+          <Border.Background>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+              <GradientStop Offset="0" Color="#00FFFFFF" />
+              <GradientStop Offset="1">
+                <GradientStop.Color>
+                  <MultiBinding Converter="{x:Static converters:HsbToMediaColorConverter.Instance}">
+                    <Binding Path="Hsb.Hue" RelativeSource="{RelativeSource AncestorType={x:Type wpf:ColorPicker}}" />
+                    <Binding>
+                      <Binding.Source>
+                        <system:Double>1</system:Double>
+                      </Binding.Source>
+                    </Binding>
+                    <Binding>
+                      <Binding.Source>
+                        <system:Double>1</system:Double>
+                      </Binding.Source>
+                    </Binding>
+                  </MultiBinding>
+                </GradientStop.Color>
+              </GradientStop>
+            </LinearGradientBrush>
+          </Border.Background>
+        </Border>
+
+        <Track x:Name="PART_Track"
+               Grid.Row="1"
+               OpacityMask="{x:Null}">
+          <Track.DecreaseRepeatButton>
+            <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource MaterialDesignRepeatButton}" />
+          </Track.DecreaseRepeatButton>
+          <Track.IncreaseRepeatButton>
+            <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource MaterialDesignRepeatButton}" />
+          </Track.IncreaseRepeatButton>
+          <Track.Thumb>
+            <Thumb x:Name="Thumb"
+                   Width="20"
+                   Height="20"
+                   VerticalAlignment="Center"
+                   Focusable="False"
+                   OverridesDefaultStyle="True"
+                   Template="{StaticResource MaterialDesignColorSliderThumb}">
+              <Thumb.Foreground>
+                <MultiBinding Converter="{x:Static converters:HsbToColorConverter.Instance}">
+                  <Binding Path="Hsb.Hue" RelativeSource="{RelativeSource AncestorType={x:Type wpf:ColorPicker}}" />
+                  <Binding>
+                    <Binding.Source>
+                      <system:Double>1</system:Double>
+                    </Binding.Source>
+                  </Binding>
+                  <Binding>
+                    <Binding.Source>
+                      <system:Double>1</system:Double>
+                    </Binding.Source>
+                  </Binding>
+                </MultiBinding>
+              </Thumb.Foreground>
+            </Thumb>
+          </Track.Thumb>
+        </Track>
+      </Grid>
+    </Border>
+  </ControlTemplate>
+
+  <ControlTemplate x:Key="MaterialDesignAlphaSliderVertical" TargetType="{x:Type Slider}">
+    <Border x:Name="border"
+            Background="{TemplateBinding Background}"
+            BorderBrush="{TemplateBinding BorderBrush}"
+            BorderThickness="{TemplateBinding BorderThickness}"
+            SnapsToDevicePixels="True">
+      <Grid>
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="Auto" />
+          <ColumnDefinition Width="Auto" MinWidth="{TemplateBinding MinWidth}" />
+          <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <Border Grid.Column="1"
+                Width="8"
+                CornerRadius="4">
+          <Border.Background>
+            <LinearGradientBrush StartPoint="0,1" EndPoint="0,0">
+              <GradientStop Offset="0" Color="#00FFFFFF" />
+              <GradientStop Offset="1">
+                <GradientStop.Color>
+                  <MultiBinding Converter="{x:Static converters:HsbToMediaColorConverter.Instance}">
+                    <Binding Path="Hsb.Hue" RelativeSource="{RelativeSource AncestorType={x:Type wpf:ColorPicker}}" />
+                    <Binding>
+                      <Binding.Source>
+                        <system:Double>1</system:Double>
+                      </Binding.Source>
+                    </Binding>
+                    <Binding>
+                      <Binding.Source>
+                        <system:Double>1</system:Double>
+                      </Binding.Source>
+                    </Binding>
+                  </MultiBinding>
+                </GradientStop.Color>
+              </GradientStop>
+            </LinearGradientBrush>
+          </Border.Background>
+        </Border>
+
+        <Track x:Name="PART_Track"
+               Grid.Column="1"
+               OpacityMask="{x:Null}">
+          <Track.DecreaseRepeatButton>
+            <RepeatButton Command="{x:Static Slider.DecreaseLarge}" Style="{StaticResource MaterialDesignRepeatButton}" />
+          </Track.DecreaseRepeatButton>
+          <Track.IncreaseRepeatButton>
+            <RepeatButton Command="{x:Static Slider.IncreaseLarge}" Style="{StaticResource MaterialDesignRepeatButton}" />
+          </Track.IncreaseRepeatButton>
+          <Track.Thumb>
+            <Thumb x:Name="Thumb"
+                   Width="20"
+                   Height="20"
+                   VerticalAlignment="Top"
+                   Focusable="False"
+                   OverridesDefaultStyle="True"
+                   Template="{StaticResource MaterialDesignColorSliderThumb}">
+              <Thumb.Foreground>
+                <MultiBinding Converter="{x:Static converters:HsbToColorConverter.Instance}">
+                  <Binding Path="Hsb.Hue" RelativeSource="{RelativeSource AncestorType={x:Type wpf:ColorPicker}}" />
+                  <Binding>
+                    <Binding.Source>
+                      <system:Double>1</system:Double>
+                    </Binding.Source>
+                  </Binding>
+                  <Binding>
+                    <Binding.Source>
+                      <system:Double>1</system:Double>
+                    </Binding.Source>
+                  </Binding>
+                </MultiBinding>
+              </Thumb.Foreground>
+            </Thumb>
+          </Track.Thumb>
+        </Track>
+      </Grid>
+    </Border>
+  </ControlTemplate>
+
   <Style x:Key="MaterialDesignAlphaSlider" TargetType="{x:Type Slider}">
-    <Setter Property="Margin" Value="4" />
-    <Setter Property="Minimum" Value="0" />
+    <Setter Property="Background" Value="{x:Null}" />
+    <Setter Property="BorderBrush" Value="Transparent" />
     <Setter Property="Maximum" Value="255" />
-    <Setter Property="Orientation" Value="Horizontal" />
-    <Setter Property="IsMoveToPointEnabled" Value="True" />
-    <Setter Property="Visibility" Value="Visible" />
+    <Setter Property="Stylus.IsPressAndHoldEnabled" Value="false" />
+    <Setter Property="Template" Value="{StaticResource MaterialDesignAlphaSliderHorizontal}" />
+    <Style.Triggers>
+      <Trigger Property="Orientation" Value="Vertical">
+        <Setter Property="Template" Value="{StaticResource MaterialDesignAlphaSliderVertical}" />
+      </Trigger>
+      <Trigger Property="IsEnabled" Value="False">
+        <Setter Property="Foreground" Value="{DynamicResource MaterialDesign.Brush.CheckBox.Disabled}" />
+      </Trigger>
+    </Style.Triggers>
   </Style>
 
   <ControlTemplate x:Key="ColorPickerHorizontalTop" TargetType="{x:Type wpf:ColorPicker}">
     <DockPanel>
-      <Border x:Name="PART_Preview"
-              CornerRadius="8"
-              Width="42"
-              Height="42"
-              Margin="8"
-              VerticalAlignment="Top"
-              DockPanel.Dock="Left"
-              BorderBrush="{DynamicResource MaterialDesign.Brush.Divider}"
-              BorderThickness="1">
-        <Border.Background>
-          <SolidColorBrush Color="{Binding Color, RelativeSource={RelativeSource TemplatedParent}}" />
-        </Border.Background>
-      </Border>
-      <DockPanel>
+      <StackPanel DockPanel.Dock="Top">
+        <Grid Margin="8,8,8,0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <Border x:Name="PART_Preview"
+                  Width="42"
+                  Height="42"
+                  Margin="0,0,8,0"
+                  VerticalAlignment="Top"
+                  BorderBrush="{DynamicResource MaterialDesign.Brush.Divider}"
+                  BorderThickness="1"
+                  CornerRadius="8">
+            <Border CornerRadius="7">
+              <Border.Background>
+                <DrawingBrush TileMode="Tile" Viewport="0,0,8,8" ViewportUnits="Absolute" Viewbox="0,0,8,8" ViewboxUnits="Absolute">
+                  <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                      <GeometryDrawing Brush="#FFE6E6E6" Geometry="M0,0 H8 V8 H0 Z" />
+                      <GeometryDrawing Brush="#FFFFFFFF" Geometry="M0,0 H4 V4 H0 Z" />
+                      <GeometryDrawing Brush="#FFFFFFFF" Geometry="M4,4 H8 V8 H4 Z" />
+                    </DrawingGroup>
+                  </DrawingBrush.Drawing>
+                </DrawingBrush>
+              </Border.Background>
+              <Border CornerRadius="7">
+                <Border.Background>
+                  <SolidColorBrush Color="{Binding Color, RelativeSource={RelativeSource TemplatedParent}}" />
+                </Border.Background>
+              </Border>
+            </Border>
+          </Border>
+
+          <StackPanel Grid.Column="1">
+            <Slider x:Name="PART_HueSlider"
+                    Margin="0,0,0,4"
+                    IsMoveToPointEnabled="True"
+                    Orientation="Horizontal"
+                    Style="{StaticResource MaterialDesignColorSlider}"
+                    Value="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+            <Slider x:Name="PART_AlphaSlider"
+                    Style="{StaticResource MaterialDesignAlphaSlider}"
+                    Value="{Binding Alpha, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+          </StackPanel>
+        </Grid>
         <TextBox x:Name="PART_Input"
                  Margin="8"
-                 DockPanel.Dock="Bottom"
                  Text="{Binding Color, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
-        <Slider x:Name="PART_HueSlider"
-                Margin="4"
-                DockPanel.Dock="{TemplateBinding HueSliderPosition}"
-                IsMoveToPointEnabled="True"
-                Orientation="Horizontal"
-                Style="{StaticResource MaterialDesignColorSlider}"
-                Value="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
-        <Slider x:Name="PART_AlphaSlider"
-                DockPanel.Dock="{TemplateBinding AlphaSliderPosition}"
-                Style="{StaticResource MaterialDesignAlphaSlider}"
-                Value="{Binding Alpha, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
-        <Grid>
-          <Rectangle Fill="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static converters:HsbLinearGradientConverter.Instance}}" />
-          <Rectangle Fill="Black">
-            <Rectangle.OpacityMask>
-              <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
-                <GradientStop Offset="0" Color="Transparent" />
-                <GradientStop Offset="1.0" Color="Black" />
-              </LinearGradientBrush>
-            </Rectangle.OpacityMask>
-          </Rectangle>
+      </StackPanel>
+      <Grid>
+        <Rectangle Fill="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static converters:HsbLinearGradientConverter.Instance}}" />
+        <Rectangle Fill="Black">
+          <Rectangle.OpacityMask>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+              <GradientStop Offset="0" Color="Transparent" />
+              <GradientStop Offset="1.0" Color="Black" />
+            </LinearGradientBrush>
+          </Rectangle.OpacityMask>
+        </Rectangle>
 
-          <Canvas Name="PART_SaturationBrightnessPicker"
-                  Background="Transparent"
-                  ClipToBounds="True"
-                  Focusable="True">
-            <Thumb Name="PART_SaturationBrightnessPickerThumb"
-                   Canvas.Left="20"
-                   Canvas.Top="20">
-              <Thumb.Template>
-                <ControlTemplate>
-                  <Ellipse Width="24"
-                           Height="24"
-                           Margin="-12,-12,0,0"
-                           Fill="Transparent"
-                           Stroke="White"
-                           StrokeThickness="2" />
-                </ControlTemplate>
-              </Thumb.Template>
-            </Thumb>
-          </Canvas>
-        </Grid>
-      </DockPanel>
+        <Canvas Name="PART_SaturationBrightnessPicker"
+                Background="Transparent"
+                ClipToBounds="True"
+                Focusable="True">
+          <Thumb Name="PART_SaturationBrightnessPickerThumb"
+                 Canvas.Left="20"
+                 Canvas.Top="20">
+            <Thumb.Template>
+              <ControlTemplate>
+                <Ellipse Width="24"
+                         Height="24"
+                         Margin="-12,-12,0,0"
+                         Fill="Transparent"
+                         Stroke="White"
+                         StrokeThickness="2" />
+              </ControlTemplate>
+            </Thumb.Template>
+          </Thumb>
+        </Canvas>
+      </Grid>
     </DockPanel>
     <ControlTemplate.Triggers>
-      <Trigger Property="AlphaSliderPosition" Value="Left">
-        <Setter TargetName="PART_AlphaSlider" Property="Orientation" Value="Vertical" />
-      </Trigger>
-      <Trigger Property="AlphaSliderPosition" Value="Right">
-        <Setter TargetName="PART_AlphaSlider" Property="Orientation" Value="Vertical" />
-      </Trigger>
       <Trigger Property="ShowAlphaSlider" Value="False">
         <Setter TargetName="PART_AlphaSlider" Property="Visibility" Value="Collapsed" />
       </Trigger>
@@ -368,36 +548,58 @@
 
   <ControlTemplate x:Key="ColorPickerHorizontalBottom" TargetType="{x:Type wpf:ColorPicker}">
     <DockPanel>
-      <Border x:Name="PART_Preview"
-              CornerRadius="8"
-              Width="42"
-              Height="42"
-              Margin="8"
-              VerticalAlignment="Top"
-              DockPanel.Dock="Left"
-              BorderBrush="{DynamicResource MaterialDesign.Brush.Divider}"
-              BorderThickness="1">
-        <Border.Background>
-          <SolidColorBrush Color="{Binding Color, RelativeSource={RelativeSource TemplatedParent}}" />
-        </Border.Background>
-      </Border>
-      <DockPanel>
+      <StackPanel DockPanel.Dock="Bottom">
+        <Grid Margin="8,8,8,0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+
+          <Border x:Name="PART_Preview"
+                  Width="42"
+                  Height="42"
+                  Margin="0,0,8,0"
+                  VerticalAlignment="Top"
+                  BorderBrush="{DynamicResource MaterialDesign.Brush.Divider}"
+                  BorderThickness="1"
+                  CornerRadius="8">
+            <Border CornerRadius="7">
+              <Border.Background>
+                <DrawingBrush TileMode="Tile" Viewport="0,0,8,8" ViewportUnits="Absolute" Viewbox="0,0,8,8" ViewboxUnits="Absolute">
+                  <DrawingBrush.Drawing>
+                    <DrawingGroup>
+                      <GeometryDrawing Brush="#FFE6E6E6" Geometry="M0,0 H8 V8 H0 Z" />
+                      <GeometryDrawing Brush="#FFFFFFFF" Geometry="M0,0 H4 V4 H0 Z" />
+                      <GeometryDrawing Brush="#FFFFFFFF" Geometry="M4,4 H8 V8 H4 Z" />
+                    </DrawingGroup>
+                  </DrawingBrush.Drawing>
+                </DrawingBrush>
+              </Border.Background>
+              <Border CornerRadius="7">
+                <Border.Background>
+                  <SolidColorBrush Color="{Binding Color, RelativeSource={RelativeSource TemplatedParent}}" />
+                </Border.Background>
+              </Border>
+            </Border>
+          </Border>
+
+          <StackPanel Grid.Column="1">
+            <Slider x:Name="PART_HueSlider"
+                    Margin="0,0,0,4"
+                    IsMoveToPointEnabled="True"
+                    Orientation="Horizontal"
+                    Style="{StaticResource MaterialDesignColorSlider}"
+                    Value="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+            <Slider x:Name="PART_AlphaSlider"
+                    Style="{StaticResource MaterialDesignAlphaSlider}"
+                    Value="{Binding Alpha, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+          </StackPanel>
+        </Grid>
         <TextBox x:Name="PART_Input"
                  Margin="8"
-                 DockPanel.Dock="Bottom"
                  Text="{Binding Color, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
-        <Slider x:Name="PART_AlphaSlider"
-                DockPanel.Dock="{TemplateBinding AlphaSliderPosition}"
-                Style="{StaticResource MaterialDesignAlphaSlider}"
-                Value="{Binding Alpha, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
-        <Slider x:Name="PART_HueSlider"
-                Margin="4"
-                DockPanel.Dock="{TemplateBinding HueSliderPosition}"
-                IsMoveToPointEnabled="True"
-                Orientation="Horizontal"
-                Style="{StaticResource MaterialDesignColorSlider}"
-                Value="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
-        <Grid>
+      </StackPanel>
+      <Grid>
           <Rectangle Fill="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static converters:HsbLinearGradientConverter.Instance}}" />
           <Rectangle Fill="Black">
             <Rectangle.OpacityMask>
@@ -428,15 +630,8 @@
             </Thumb>
           </Canvas>
         </Grid>
-      </DockPanel>
     </DockPanel>
     <ControlTemplate.Triggers>
-      <Trigger Property="AlphaSliderPosition" Value="Left">
-        <Setter TargetName="PART_AlphaSlider" Property="Orientation" Value="Vertical" />
-      </Trigger>
-      <Trigger Property="AlphaSliderPosition" Value="Right">
-        <Setter TargetName="PART_AlphaSlider" Property="Orientation" Value="Vertical" />
-      </Trigger>
       <Trigger Property="ShowAlphaSlider" Value="False">
         <Setter TargetName="PART_AlphaSlider" Property="Visibility" Value="Collapsed" />
       </Trigger>
@@ -451,35 +646,62 @@
 
   <ControlTemplate x:Key="ColorPickerVertical" TargetType="{x:Type wpf:ColorPicker}">
     <DockPanel>
-      <Border x:Name="PART_Preview"
-              Width="42"
-              Height="42"
-              Margin="8"
-              VerticalAlignment="Top"
-              DockPanel.Dock="Left"
-              BorderBrush="{DynamicResource MaterialDesign.Brush.Divider}"
-              BorderThickness="1">
-        <Border.Background>
-          <SolidColorBrush Color="{Binding Color, RelativeSource={RelativeSource TemplatedParent}}" />
-        </Border.Background>
-      </Border>
-      <DockPanel>
-        <Slider x:Name="PART_HueSlider"
-                Margin="8"
-                DockPanel.Dock="{TemplateBinding HueSliderPosition}"
-                IsMoveToPointEnabled="True"
-                Orientation="Vertical"
-                Style="{StaticResource MaterialDesignColorSlider}"
-                Value="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
-        <Slider x:Name="PART_AlphaSlider"
-                DockPanel.Dock="{TemplateBinding AlphaSliderPosition}"
-                Style="{StaticResource MaterialDesignAlphaSlider}"
-                Value="{Binding Alpha, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+      <DockPanel DockPanel.Dock="{TemplateBinding HueSliderPosition}">
         <TextBox x:Name="PART_Input"
                  Margin="8"
                  DockPanel.Dock="Bottom"
                  Text="{Binding Color, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
-        <Grid>
+        <Border x:Name="PART_Preview"
+                Width="42"
+                Height="42"
+                Margin="8"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Top"
+                BorderBrush="{DynamicResource MaterialDesign.Brush.Divider}"
+                BorderThickness="1"
+                CornerRadius="8"
+                DockPanel.Dock="Top">
+          <Border CornerRadius="7">
+            <Border.Background>
+              <DrawingBrush TileMode="Tile" Viewport="0,0,8,8" ViewportUnits="Absolute" Viewbox="0,0,8,8" ViewboxUnits="Absolute">
+                <DrawingBrush.Drawing>
+                  <DrawingGroup>
+                    <GeometryDrawing Brush="#FFE6E6E6" Geometry="M0,0 H8 V8 H0 Z" />
+                    <GeometryDrawing Brush="#FFFFFFFF" Geometry="M0,0 H4 V4 H0 Z" />
+                    <GeometryDrawing Brush="#FFFFFFFF" Geometry="M4,4 H8 V8 H4 Z" />
+                  </DrawingGroup>
+                </DrawingBrush.Drawing>
+              </DrawingBrush>
+            </Border.Background>
+            <Border CornerRadius="7">
+              <Border.Background>
+                <SolidColorBrush Color="{Binding Color, RelativeSource={RelativeSource TemplatedParent}}" />
+              </Border.Background>
+            </Border>
+          </Border>
+        </Border>
+        <Grid Margin="8,0,8,8">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+          </Grid.ColumnDefinitions>
+          <Slider x:Name="PART_HueSlider"
+                  Grid.Column="0"
+                  MinHeight="96"
+                  IsMoveToPointEnabled="True"
+                  Orientation="Vertical"
+                  Style="{StaticResource MaterialDesignColorSlider}"
+                  Value="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" />
+          <Slider x:Name="PART_AlphaSlider"
+                  Grid.Column="1"
+                  Margin="8,0,0,0"
+                  MinHeight="96"
+                  Orientation="Vertical"
+                  Style="{StaticResource MaterialDesignAlphaSlider}"
+                  Value="{Binding Alpha, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}" />
+        </Grid>
+      </DockPanel>
+      <Grid>
           <Rectangle Fill="{Binding Hsb.Hue, RelativeSource={RelativeSource TemplatedParent}, Converter={x:Static converters:HsbLinearGradientConverter.Instance}}" />
           <Rectangle Fill="Black">
             <Rectangle.OpacityMask>
@@ -510,15 +732,8 @@
             </Thumb>
           </Canvas>
         </Grid>
-      </DockPanel>
     </DockPanel>
     <ControlTemplate.Triggers>
-      <Trigger Property="AlphaSliderPosition" Value="Left">
-        <Setter TargetName="PART_AlphaSlider" Property="Orientation" Value="Vertical" />
-      </Trigger>
-      <Trigger Property="AlphaSliderPosition" Value="Right">
-        <Setter TargetName="PART_AlphaSlider" Property="Orientation" Value="Vertical" />
-      </Trigger>
       <Trigger Property="ShowAlphaSlider" Value="False">
         <Setter TargetName="PART_AlphaSlider" Property="Visibility" Value="Collapsed" />
       </Trigger>
